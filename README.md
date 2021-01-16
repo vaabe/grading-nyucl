@@ -1,2 +1,1 @@
-# grading-nyucl
-Grading workflow
+# grading-nycl
