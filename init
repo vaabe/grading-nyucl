@@ -14,5 +14,5 @@ else
 	gradefilemeta=$(head -n 1 ./$1/grades.csv)
 	echo "$gradefilemeta" > $inprogressfile
 
-	Rscript clean.R $1
+	Rscript ./src/clean.R $1
 fi

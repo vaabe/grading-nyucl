@@ -6,5 +6,6 @@ if [ ! -f "$inprogressfile" ]; then
 	echo "Cannot grade. Problem set directory not initialised."
 else
 	direcs=("./$1/*/")
-	Rscript parse.R $direcs
+	Rscript ./src/grade.R $direcs
+	julia ./src/distr.jl $1
 fi
