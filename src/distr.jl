@@ -1,5 +1,6 @@
 using DelimitedFiles
 using UnicodePlots
+using Statistics
 
 gradefile = readdlm(string(ARGS[1], "/grades.csv"), ',')
 grades = gradefile[2:size(gradefile)[1], 5]

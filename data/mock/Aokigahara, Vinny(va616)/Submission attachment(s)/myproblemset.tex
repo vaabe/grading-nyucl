@@ -1,0 +1,686 @@
+\documentclass[9pt]{extarticle}
+\usepackage[margin=0.7cm]{geometry}
+\usepackage[UKenglish]{babel}
+\usepackage{parallel,enumitem}
+\usepackage{multicol}
+\setlength{\columnsep}{0.7cm}
+\setlength{\columnseprule}{0.5pt}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\graphicspath{{./pics/}}
+\usepackage{physics}
+
+
+%% vectors and matrices
+\renewcommand{\v}[1]{{\bm #1}}
+\renewcommand{\dv}[1]{\dot{\bm{#1}}}
+\newcommand{\ddv}[1]{\ddot{\bm{#1}}}
+\newcommand{\hv}[1]{\hat{\bm{#1}}}
+\newcommand{\m}[1]{[ #1 ]}
+\renewcommand{\t}[1]{\widetilde{\bm{#1}}}
+\newcommand{\bfit}[1]{\textbf{\textit{#1}}}
+
+%% differential and integral operators
+\renewcommand{\d}{\text{d}}
+\renewcommand{\dd}[2]{\frac{\d #1}{\d #2}}
+\newcommand{\ddd}[2]{\frac{\d^2 #1}{\d #2^2}}
+\newcommand{\ddt}[1]{\frac{\d #1}{\d t}}
+\newcommand{\dddt}[1]{\frac{\d^2 #1}{\d t^2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\renewcommand{\grad}{\boldsymbol \nabla} 
+\renewcommand{\div}{\boldsymbol \nabla \cdot}
+\renewcommand{\curl}{\boldsymbol \nabla \times}
+\newcommand{\lap}{\nabla^2}
+
+%% constants
+\newcommand{\eo}{\epsilon_0}
+
+
+
+\begin{document}
+
+\setlength{\parindent}{0pt}
+
+
+
+
+
+{\huge \bf problem set} 
+
+\noindent \hrulefill
+
+\begin{multicols*}{2}
+
+
+
+
+
+{\bf \LARGE I --- Hermitian Hamiltonian} \\
+
+{\it Townsend 4.1} \\ 
+Show that unitarity of the infinitesimal time-evolution operator (4.4) requires that the Hamiltonian $\hat H$ be Hermitian. \\ 
+
+{\bfit{Solution}} \\ 
+The infinitesimal time-evolution operator is:
+
+$$\hat U (\d t) = 1 - \frac i \hbar \hat H \d t$$ \ 
+
+where $\hat H$ is a generator of time translations known as the Hamiltonian. \\ 
+
+Note that the time evolution operator, which translates kets forward in time (i.e. $\hat U(t) \ket{\psi(0)} = \ket{\psi(t)}$ ), must be unitary in order that time evolution does not affect the normalisation of a state (i.e. to conserve probability):
+
+$$\bra{\psi(t)}\ket{\psi(t)} = \bra{\psi(0)} \hat U^\dagger(t) \hat U(t) \ket{\psi(0)} = \bra{\psi(0)}\ket{\psi(0)} = 1$$ 
+
+$$\therefore \;\; \hat U^\dagger (t) \hat U (t) = 1$$ \
+
+Naturally the {\it infinitesimal} time evolution operator must also be unitary, i.e. $\hat U^\dagger (\d t) \hat U (\d t) = 1$. Note the product $\hat U^\dagger (\d t) \hat U (\d t)$ can be expanded as follows:  
+
+$$
+\begin{aligned}
+	\bigg( 1 + \frac i \hbar \hat H^\dagger \d t \bigg) \bigg( 1 - \frac i \hbar \hat H \d t \bigg) &= 1 \\ 
+	1 - \frac i \hbar \hat H \d t + \frac i \hbar \hat H^\dagger \d t - \frac{i^2}{\hbar^2} \hat H^\dagger \hat H (\d t)^2 &= 1
+\end{aligned}
+$$ \ 
+
+where $(\d t)^2$ term is negligible (since it's infinitesimal) and thus:
+
+$$1 - \frac i \hbar \hat H \d t + \frac i \hbar \hat H^\dagger \d t = 1$$ \ 
+
+Subtracting 1 from each side and rearranging gives:
+
+$$\frac i \hbar \hat H^\dagger \d t = \frac i \hbar \hat H \d t$$ \ 
+
+And, cancelling like terms leaves:
+
+$$\hat H^\dagger = \hat H$$ \ 
+
+which is consistent with the condition for a Hermitian operator (that the matrix representation of the operator is equal to its adjugate transpose). \\ 
+
+Thus it follows that the Hamiltonian operator $\hat H$ is Hermitian. \\ 
+
+
+
+
+
+\hrulefill 
+
+\hfill 
+
+{\bf \LARGE II --- Expectation Values for Stationary States} \\ 
+
+{\it Townsend 4.3} \\ 
+Use (4.16) to verify that the expectation value of an observable $A$ does not chage with time if the system is in an energy eigenstate (a stationary state) and $\hat A$ does not depend explicitly on time. \\ 
+
+{\bfit{Solution}} \\ 
+The expectation value of an observable $A$ in terms of its corresponding operator $\hat A$ can be expressed:
+
+$$\langle A \rangle = \bra{\psi} \hat A \ket{\psi}$$ \ 
+
+Under time evolution, the time-dependence of the expectation value can thus be expressed:
+
+$$\ddt{} \langle A \rangle = \ddt{} \bra{\psi(t)} \hat A \ket{\psi(t)}$$ \ 
+
+Expanding the derivative (by using the product rule) gives:
+
+$$\ddt{} \langle A \rangle = \bigg( \ddt{} \bra{\psi(t)} \bigg) \hat A \ket{\psi(t)} + \bra{\psi(t)} \hat A \bigg( \ddt{} \ket{\psi(t)} \bigg) + \bra{\psi(t)} \pd{\hat A}{t} \ket{\psi(t)}$$ \ 
+
+where the last term on the RHS is included in case the operator $\hat A$ explicitly depends on time. In this problem we assume it does not, and thus the last term can be neglected. \\ 
+
+Note that from the Schrodinger equation:
+
+$$i\hbar \ddt{} \ket{\psi(t)} = \hat H \ket{\psi(t)}$$
+
+$$\therefore \;\; \ddt{} \ket{\psi(t)} = \frac{1}{i\hbar} \hat H \ket{\psi(t)}$$ \ 
+
+Using this we can simplify the derivative above to read:
+
+$$
+\begin{aligned}
+	\ddt{} \langle A \rangle &= \bigg( \frac{1}{-i\hbar} \bra{\psi(t))} \hat H \bigg) \hat A \ket{\psi(t)} + \bra{\psi(t)} \hat A \bigg( \frac{1}{i\hbar} \hat H \ket{\psi(t)} \bigg) \\ 
+	&= \frac i \hbar \bra{\psi(t)} \hat H \hat A - \hat H \hat A \ket{\psi(t)} \\ 
+	&= \frac i \hbar \bra{\psi(t)} [\hat H, \hat A] \ket{\psi(t)}
+\end{aligned}
+$$ \ 
+
+This is valid for any observable $A$ as long as $\hat A$ does not depend explicitly on time. \\ 
+
+Since the Hamiltonian is the energy operator, i.e. $\langle E \rangle = \bra{\psi} \hat H \ket{\psi}$, it follows the following eigenvalue equation:
+
+$$\hat H \ket{E} = E \ket{E}$$ \ 
+
+where $\ket{E}$ is an energy eigenstate of $\hat H$ with eigenvalue $E$. \\ 
+
+Thus if the system is in an energy eigenstate, its Hamiltonian $\hat H$ can be replaced by the energy eigenvalue $E$. Substituting $E$ for $\hat H$ in the equation for $\ddt{} \langle A \rangle$ gives:
+
+$$
+\begin{aligned}
+	\ddt{} \langle A \rangle &= \frac i \hbar \bra{\psi(t)} [\hat H, \hat A] \ket{\psi(t)} \\ 
+	&= \frac i \hbar \bra{\psi(t)} [E,\hat A] \ket{\psi(t)} \\ 
+	&= \frac i \hbar \bra{\psi(t)} E \hat A - \hat A E \ket{\psi(t)} \\ 
+	&= \frac i E \bra{\psi(t)} \hat A -  \hat A \ket{\psi(t)}  = 0\\ 
+\end{aligned}
+$$ \ 
+
+Thus if the system is in an energy eigenstate and $\hat A$ does not depend explicitly on time, the expectation value of the observable $A$ does not depend on time either, i.e. $\ddt{} \langle A \rangle =0$. \\ 
+
+Note that if $\hat A$ does depend on time, i.e. $\pd{\hat A}{t} \neq 0$, then $\ddt{} \langle A \rangle = \pd{\hat A}{t}$, i.e. in this case the expectation value of the observable $A$ is governed by the explicit time-dependence of $\hat A$ (provided, of course, that the system is in an energy eigenstate). \\ 
+
+
+
+
+
+\hrulefill 
+
+\newpage
+
+{\bf \LARGE III --- Spin $\frac 12$ in a Magnetic Field (a)} \\ 
+
+{\it Townsend 4.5} \\ 
+A beam of spin-$\frac 12$ particles in the $\ket{+z}$ state enters a uniform magnetic field $B_0$ in the $xz$ plane oriented at an angle $\theta$ with respect to the $z$ axis. At time $T$ later, the particles enter an SG$y$ device. What is the probability the particles will be found with $S_y = \frac \hbar 2$? Check your result by evaluating the special cases $\theta = 0$ and $\theta = \frac \pi 2$. \\ 
+
+
+{\bfit{Solution}} \\ 
+The magnetic field in this problem can be written in terms of its components in the $x$ and $z$ directions as:
+
+$$\v B_0 = B_0 \sin\theta \v i + B_0 \cos\theta \v k = B_0 \v n$$ \
+
+where $\v n$ is a unit vector in the direction of the magnetic field. \\
+
+The Hamiltonian of a spin-$\frac 12$ particle in this magnetic field is:
+
+$$\hat H = -\hv \mu \cdot \v B_0 = -\frac{gq}{2mc} \hv S \cdot \v B_0 = \frac{ge}{2mc} \hat S_n B_0 = \omega_0 \hat S_n$$ \ 
+
+where the charge of the particle is $q = -e$, and $\omega_0 = \frac{ge B_0}{2mc}$. \\  
+
+The time evolution operator in this case is:
+
+$$\hat U(t) = e^{-i \hat H t / \hbar} = e^{-i \omega_0 \hat S_n t / \hbar}$$ \ 
+
+Note since $\omega_0 t = \phi$:
+
+$$e^{-i \omega_0 \hat S_n t / \hbar} = e^{-i \hat S_n \phi / \hbar} = \hat R(\phi \v n)$$ \ 
+
+i.e. the Hamiltonian causes the spin to precess about $\v n$, the direction of the magnetic field. \\ 
+
+Note $\hat S_n = \v n \cdot \hv S = n_x \hat S_x + n_y \hat S_y + n_z \hat S_z$. In this case the magnetic field has no $y$-component, so $\hat S_n$ is:
+
+$$\hat S_n = \frac \hbar 2\begin{bmatrix} n_z & n_x \\ n_x & -n_z \end{bmatrix} = \frac \hbar 2 \begin{bmatrix} \cos\theta & \sin\theta \\ \sin\theta & -\cos\theta \end{bmatrix}$$ \ 
+
+where the matrix on the RHS is the Pauli spin matrix $\sigma_n$ in the $S_z$ basis, as follows: 
+
+$$\sigma_n \xrightarrow[S_z]{} \begin{bmatrix} \cos\theta & \sin\theta \\ \sin\theta & -\cos\theta \end{bmatrix}$$ \ 
+
+The time-evolution operator can thus be written in the $S_z$ basis as:
+
+$$\hat U(t) = e^{-i \hat S_n \phi / \hbar} = \cos \frac \phi 2 - i\sigma_n \sin \frac \phi 2$$ \ 
+
+which gives:
+
+$$\hat U(t) \xrightarrow[S_z]{} 
+\begin{bmatrix}
+	\cos \frac \phi 2 - i\sin \frac \phi 2 \cos\theta & -i\sin\frac \phi 2 \sin\theta \\ 
+	-i\sin\frac \phi 2 \sin\theta & \cos \frac \phi 2 + i\sin\frac \phi 2\cos\theta
+\end{bmatrix}
+$$ \ 
+
+Thus the state of the particle at time $t$ is:
+
+$$\ket{\psi(t)} = \hat U(t) \ket{+z} = \bigg[ \cos \frac \phi 2 - i\sin\frac \phi 2 \cos\theta \bigg] \ket{+z} - i\sin\frac \phi 2 \sin\theta \ket{-z}$$ \ 
+
+The probability amplitude to find the particle in state $\ket{+y}$ at time $t$ can be expressed $\bra{+y}\ket{\psi(t)}$. Note that the state $\ket{+y}$ can be expressed as a superposition of the $\ket{\pm z}$ states:
+
+$$\ket{+y} = \frac{1}{\sqrt 2} \ket{+z} - \frac{i}{\sqrt 2} \ket{-z}$$ \ 
+
+Thus the probability amplitude $\bra{+y}\ket{\psi(t)}$ is:
+
+$$\bra{+y}\ket{\psi(t)} = \frac{1}{\sqrt 2} \bigg[ \cos \frac \phi 2 - i\sin\frac \phi 2 \cos\theta \bigg] - \frac{1}{\sqrt 2} \sin\frac \phi 2 \sin\theta \ket{-z}$$ \ 
+
+And, the probability of finding the particle in $\ket{+y}$ reduces to: 
+
+$$\big| \bra{+y}\ket{\psi(t)} \big|^2 = \frac{1 - \sin(\omega t)\sin\theta}{2}$$ \ 
+
+In the case that $\theta = 0$, i.e. the magnetic field is completely in the $z$-direction, the sine terms become zero and the probability of finding a particle in $\ket{+y}$ evalues to $P = \frac 12$. \\ 
+
+In the case that $\theta = \frac \pi 2$, i.e. the magnetic field is completely in the $x$-direction, and the probability of finding a particle in $\ket{+y}$ evalues to $P = \frac{1 - \sin(\omega t)}{2}$. Note this has a time dependency. At time $T$, the specific probability is $P = \frac{1 - \sin(\omega T)}{2}$. \\  
+
+
+
+
+
+
+
+
+
+\hrulefill 
+
+\hfill
+
+{\bf \LARGE III --- Spin $\frac 12$ in a Magnetic Field (b)} \\ 
+
+{\it Townsend 4.8} \\ 
+A spin-$\frac 12$ particle, initially in a state with $S_n = \frac \hbar 2$ with $\v n = \sin\theta \v i + \cos\theta \v k$, is in a constant magnetic field $B_0$ in the $z$ direction. Determine the state of the particle at time $t$ and determine how $\langle S_x \rangle$, $\langle S_y \rangle$, and $\langle S_z \rangle$ vary with time. {\it Hint:} you can make use of the general spin states from problems 1.3 and 1.6. \\ 
+
+{\bfit{Solution}} \\ 
+The Hamiltonian for a spin-$\frac 12$ particle in a magnetic field $\v B_0 = B_0 \v k$ (i.e. the $z$-direction) is given by:
+
+$$\hat H = \omega_0 \hat S_z$$ \ 
+
+where $\omega_0 = \frac{geB_0}{2mc}$. The time evolution operator is given by:
+
+$$\hat U(t) = e^{-i \hat H t / \hbar} = e^{-i \omega_0 \hat S_z t / \hbar} = e^{-i S_z \phi / \hbar} = \hat R(\phi \v k)$$ \ 
+
+where $\phi = \omega_0 t$. Thus the Hamiltonian causes the spin to precess about the $z$-axis. \\ 
+
+In this case the particle is initially in the state $\ket{+n}$, i.e. $\ket{\psi(0)} = \ket{+n}$. Since the magnetic field points in the $z$-direction, it is useful to express the initial state $\ket{+n}$ as a superposition of states $\ket{\pm z}$ (the eigenstates of the Hamiltonian):
+
+$$\ket{+n} = \cos \frac \theta 2 \ket{+z} + \sin \frac \theta 2 \ket{-z}$$ \ 
+
+Thus the initial state of the particle can be expressed: 
+
+$$\ket{\psi(0)} = \ket{+n} = \cos \frac \theta 2 \ket{+z} + \sin \frac \theta 2 \ket{-z}$$ \
+
+The state of the particle at time $t$ is:
+
+$$
+\begin{aligned}
+	\ket{\psi(t)} &= \hat U(t) \ket{\psi(0)} \\ 
+	&= e^{-i \hat H t / \hbar} \bigg( \cos \frac \theta 2 \ket{+z} + \sin \frac \theta 2 \ket{-z} \bigg)  \\ 
+	&= e^{-i \omega_0 t / 2} \cos \frac \theta 2 \ket{+z} + e^{i\omega_0 t / 2} \sin \frac \theta 2 \ket{-z}
+\end{aligned}
+$$ \\ 
+
+The expected value of $S_x$ is given by $\langle S_x \rangle = \bra{\psi(t)} \hat S_x \ket{\psi(t)}$, where $\hat S_x = \frac \hbar 2 \big( \begin{smallmatrix} 0 & 1 \\ 1 & 0 \end{smallmatrix} \big)$. Expanding this product:
+
+$$
+\begin{aligned}
+	\langle S_x \rangle &= \bigg( e^{i\omega_0 t / 2} \cos\frac \theta 2 \bra{+z} + e^{-i \omega_0 t / 2} \sin\frac \theta 2 \bra{-z} \bigg) \frac \hbar 2 \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}  \cdot \\ 
+	&\hspace{3cm}\bigg( e^{-i \omega_0 t / 2} \cos \frac \theta 2 \ket{+z} + e^{i\omega_0 t / 2} \sin \frac \theta 2 \ket{-z} \bigg)
+\end{aligned}
+$$ 
+
+$$= \frac \hbar 2 \bigg( e^{i\omega_0 t} \sin \frac \theta 2 \cos \frac\theta 2 + e^{-i\omega_0 t} \sin \frac \theta 2 \cos \frac \theta 2 \bigg)$$ 
+
+$$= \frac \hbar 2 \sin\frac \theta 2 \cos\frac \theta 2 \cdot 2\cos(\omega_0t) = \frac \hbar 2 \sin\theta \cos(\omega_0 t)$$ \ 
+
+$$\therefore \;\; \langle S_x \rangle = \frac \hbar 2 \sin\theta \cos(\omega_0 t)$$ \\ 
+
+The expected value of $S_y$ is given by $\langle S_y \rangle = \bra{\psi(t)} \hat S_y \ket{\psi(t)}$, where $\hat S_y =\frac \hbar 2 \big( \begin{smallmatrix} 0 & -i \\ i & 0 \end{smallmatrix} \big)$. Expanding this product, using a similar method to above:
+
+$$
+\begin{aligned}
+	\langle S_y \rangle &= \big( ... \big) \hat S_y \big( ... \big) \\ 
+	&= \frac{i\hbar}{2} \bigg( e^{-i\omega_0 t} \sin\frac\theta 2 \cos\frac\theta 2 - e^{-i\omega_0t} \sin\frac\theta 2 \cos\frac\theta 2 \bigg) \\ 
+	&= \frac{i\hbar}{2} \sin\frac\theta 2 \cos\frac\theta 2 \cdot (-2i\sin(\omega_0t)) \\  
+	&= \frac \hbar 2 \sin\theta \sin(\omega_0t)
+\end{aligned}
+$$ \\ 
+
+The expected value of $S_z$ is given by $\langle S_z\rangle = \bra{\psi(t)} \hat S_z \ket{\psi(t)}$, where $\hat S_z = \frac \hbar 2 \big( \begin{smallmatrix} 1 & 0 \\ 0 & -1 \end{smallmatrix} \big)$. Expanding this product, using a similar method to above:
+
+$$
+\begin{aligned}
+        \langle S_z \rangle &= \big( ... \big) \hat S_z \big( ... \big) \\ 
+        &= \frac{i\hbar}{2} \bigg( e^{-i\omega_0 t} \sin\frac\theta 2 \cos\frac\theta 2 - e^{-i\omega_0t} \sin\frac\theta 2 \cos\frac\theta 2 \bigg) \\ 
+        &= \frac \hbar 2 \bigg( \cos^2\frac\theta 2 - \sin^2\frac\theta 2 \bigg) \\ 
+        &= \frac \hbar 2 \cos\theta 
+\end{aligned}
+$$ \\
+
+Thus:
+
+$$\langle S_x \rangle = \frac \hbar 2 \sin\theta \cos(\omega_0 t) \hspace{0.5cm} \langle S_y \rangle = \frac \hbar 2 \sin\theta \sin(\omega_0t) \hspace{0.5cm} \langle S_z \rangle = \frac \hbar 2 \cos\theta$$ \ 
+
+Naturally, since $\hat S_z$ commutes with the Hamiltonian, the expectation value of $S_z$ is constant and does not depend on time. But the converse is true for the expectation values of $S_x$ and $S_y$, whose operators do not commute with the Hamiltonian, and thus exhibit time-dependence. \\  
+
+
+
+
+
+
+
+
+\hrulefill 
+
+\hfill 
+
+{\bf \LARGE IV --- Time Evolution of a 3-State System} \\ 
+
+{\it Townsend 4.13} \\ 
+
+Let
+
+$$
+\begin{bmatrix}
+	E_0 & 0 & A \\ 
+	0 & E_1 & 0 \\ 
+	A & 0 & E_0
+\end{bmatrix}
+$$ \ 
+
+be the matrix representation of the Hamiltonian for a three-state system with basis states $\ket{1}$, $\ket{2}$, and $\ket{3}$. \\ 
+
+(a) if the state of the system at time $t=0$ is $\ket{\psi(0)} = \ket{2}$, what is $\ket{\psi(t)}$? (b) if the state of the system at time $t=0$ is $\ket{\psi(0)} = \ket{3}$, what is $\ket{\psi(t)}$? \\ 
+
+
+{\bfit{Solution}} \\ 
+The Hamiltonian operator satisfies the following eigenvalue equation: 
+
+$$\hat H \ket E = E \ket E$$ \ 
+
+where $\ket E$ is an energy eigenstate of $\hat H$ with eigenvalue $E$. \\ 
+
+Using the matrix representation of $\hat H$ given above, the eigenstates and eigenvalues can be computed by solving the eigenvalue equation. First, rearranging the equation:
+
+$$(\hat H - \v I E ) \ket E = 0$$ \ 
+
+where $\v I$ is the identity matrix. In matrix form this equation is: 
+
+$$
+\begin{bmatrix}
+	E_0 - E & 0 & A \\ 
+	0 & E_1 - E & 0 \\ 
+	A & 0 & E_0 - E
+\end{bmatrix}
+\begin{bmatrix} a \\ b \\ c 
+\end{bmatrix} = 0
+$$ \ 
+
+Taking the determinant of the matrix $(\hat H - \v I E)$: 
+
+$$
+\begin{bmatrix}
+        E_0 - E & 0 & A \\ 
+        0 & E_1 - E & 0 \\ 
+        A & 0 & E_0 - E
+\end{bmatrix}_{\text{det.}}
+$$ 
+
+$$= (E_0 - E)(E_1 - E)(E_0 - E) - A^2 (E_1 - E) = 0$$ \ 
+
+Which gives three the eigenvalues $E = \{ E_1, E_0+1, E_0-A \}$. \\ 
+
+Setting $E = E_1$ and substituting:
+
+$$
+\begin{bmatrix}
+        E_0 - E_1 & 0 & A \\ 
+        0 & E_1 - E_1 & 0 \\ 
+        A & 0 & E_0 - E_1
+\end{bmatrix}
+\begin{bmatrix}
+	a \\ b \\ c
+\end{bmatrix}
+=0
+$$ \ 
+
+gives the following three equations: 
+
+$$(E_0 - E_1)a + Ac = 0$$
+$$(E_1 - E_1)b = 0$$
+$$Aa + (E_0-E_1)c = 0$$ \ 
+
+This is only possible if $b = 1$ and $a = c = 0$. Thus the eigenstate corresponding to the eigenvalue $E = E_1$ is:
+
+$$\ket{E_1} = \begin{bmatrix}
+        0 \\ 1 \\ 0
+\end{bmatrix}
+$$ \ 
+
+Note this corresponds to the basis state $\ket 2$, thus:
+
+$$\ket{E_1} = \ket 2$$ \\ 
+
+Next, setting $E = E_0 +A$ and substituting:
+
+$$
+\begin{bmatrix}
+        -A & 0 & A \\ 
+        0 & E_1 - E_0 - A & 0 \\ 
+        A & 0 & - A
+\end{bmatrix}
+\begin{bmatrix}
+        a \\ b \\ c
+\end{bmatrix}
+=0
+$$ \
+
+gives the following three equations:
+
+$$-Aa + Ac = 0$$
+$$(E_1-E_0-A)b = 0$$
+$$Aa - Ac = 0$$ \ 
+
+Thus is only possible if $a = c$ and $b=0$. Requiring that the vector be normalized also pulls out a factor of $\frac{1}{\sqrt 2}$. Thus the eigenstate corresponding to the eigenvalue $E = E_0 +A$ is:
+
+$$
+\ket{E_0+A} = \frac{1}{\sqrt 2}
+\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}
+$$ \ 
+
+Noting that this can also be written:
+
+$$
+\ket{E_0+A} = \frac{1}{\sqrt 2}
+\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} +
+\frac{1}{\sqrt 2}
+\begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}
+$$ \ 
+
+means this eigenstate is a superposition of the basis states $\ket 1$ and $\ket 3$:
+
+$$\ket{E_0+A} = \frac{1}{\sqrt 2} \ket 1 + \frac{1}{\sqrt 2} \ket 3$$ \\ 
+
+Next, setting $E = E_0 - A$ and substituting:
+
+$$
+\begin{bmatrix}
+        A & 0 & A \\       
+        0 & E_1 - E_0 + A & 0 \\
+        A & 0 & A
+\end{bmatrix}
+\begin{bmatrix}
+        a \\ b \\ c
+\end{bmatrix}
+=0
+$$ \
+
+gives the following three equations:
+
+$$Aa+Ac = 0$$
+$$(E_1 - E_0 +A)b = 0$$
+$$Aa+Ac = 0$$ \ 
+
+This is only possible if $a = -c$ and $b = 0$. Again, requiring that the vector be normalized pulls out a factor of $\frac{1}{\sqrt 2}$. Thus the eigenstate corresponding to the eigenvalue $E = E_0-A$ is:
+
+$$\ket{E_0-A} = \frac{1}{\sqrt 2}
+\begin{bmatrix} 1 \\ 0 \\ -1 \end{bmatrix} = 
+\frac{1}{\sqrt 2}
+\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} +
+\frac{1}{\sqrt 2}
+\begin{bmatrix} 0 \\ 0 \\ -1 \end{bmatrix}
+$$ \ 
+
+i.e. this eigenstate is also a superposition of the basis states $\ket 1$ and $\ket 3$:
+
+$$\ket{E_0-A} = \frac{1}{\sqrt 2} \ket 1 - \frac{1}{\sqrt 2} \ket 3$$ \\ 
+
+
+
+
+If the initial state is $\ket 2$:
+
+$$\ket{\psi(0)} = \ket 2$$ \ 
+
+the eigenvalue is simply $E_1$, and it follows that:
+
+$$\ket{\psi(t)} = e^{-i \hat Ht/\hbar}  \ket{E_1}$$
+
+$$
+\ket{\psi(t)} = e^{-i E_1 t/ \hbar} 
+\begin{bmatrix}
+        0 \\ 1 \\ 0
+\end{bmatrix}
+$$ \\  
+
+If the initial state is $\ket 3$: 
+
+$$\ket{\psi(0)} = \ket 3$$ \
+ 
+This state can be written as the following superposition:
+
+$$\ket 3 = \frac{1}{\sqrt 2} \ket{E_0+A} + \frac{1}{\sqrt 2} \ket{E_0-A}$$ \ 
+
+Thus at time $t$ the state of the system is:
+
+$$
+\ket{\psi(t)} =  \frac{e^{-i(E_0 + A)t/\hbar}}{\sqrt 2} \frac{1}{\sqrt 2} 
+\begin{bmatrix}
+        1 \\ 0 \\ 1
+\end{bmatrix} - 
+\frac{e^{-i(E_0 -A)t/\hbar}}{\sqrt 2} \frac{1}{\sqrt 2} 
+\begin{bmatrix}
+        1 \\ 0 \\ -1
+\end{bmatrix}
+$$ \ 
+
+
+
+
+
+
+
+\hrulefill 
+
+\hfill 
+
+{\bf \LARGE V --- Spin $\frac 32$ in a Magnetic Field} \\ 
+
+{\it Townsend 4.15} \\  
+If the Hamiltonian for a spin-$\frac 32$ particle is given by
+
+$$\hat H = \omega_0 \hat S_x$$ \ 
+
+and at time $t=0$ $\ket{\psi(0)} = \ket{\frac 32, \frac 32}$, determine the probability that the particle is in the state $\ket{\frac 32, -\frac 32}$ at time $t$. Evaluate this probability when $t = \frac{\pi}{\omega_0}$ and explain your result. {\it Suggestion:} See problem 3.23 for the eigenstates of $\hat S_x$. \\ 
+
+{\bfit{Solution}} \\ 
+For a spin-$\frac 32$ particle there are four spin states, $\ket{\frac 32, \frac 32}$, $\ket{\frac 32, \frac 12}$, $\ket{\frac 32, -\frac 12}$, and $\ket{\frac 32, -\frac 32}$. For this particle, whose Hamiltonian has eigenstates in the $S_x$ basis, the representation of these four states in the $S_z$ basis is given by:
+
+$$
+\ket{\frac 32 , \frac 32}_x \longrightarrow \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 \\
+        \sqrt 3 \\
+        \sqrt 3 \\
+        1
+\end{bmatrix}
+\hspace{1cm}
+\ket{\frac 32 , \frac 12}_x \longrightarrow \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        \sqrt 3 \\
+        1 \\
+        -1 \\
+        -\sqrt 3
+\end{bmatrix}
+$$
+
+$$
+\ket{\frac 32 , -\frac 12}_x \longrightarrow \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        \sqrt 3 \\
+        -1 \\
+        -1 \\
+        \sqrt 3
+\end{bmatrix}
+\hspace{1cm}
+\ket{\frac 32 , -\frac 32}_x \longrightarrow \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 \\
+        -\sqrt 3 \\
+        \sqrt 3 \\
+        -1
+\end{bmatrix}
+$$ \\ 
+
+For this particle, at time $t$ the state is given by:
+
+$$\ket{\psi(t)} = e^{-i\hat H t / \hbar} \ket{\psi(0)}$$ \
+
+where in this case $\ket{\psi(0)} = \ket{\frac 32, \frac 32}$. It is convenient to represent this state in the $S_z$ basis as:
+
+$$
+\ket{\frac 32 , \frac 32}_x = \frac{1}{2\sqrt 2} \ket{\frac 32, \frac 32}_z + \frac{\sqrt 3}{2\sqrt 2} \ket{\frac 32 , \frac 12}_z + \frac{\sqrt 3}{2\sqrt 2} \ket{\frac 32 , -\frac 12}_z + \frac{1}{2\sqrt 2} \ket{\frac 32 , -\frac 32}_z 
+$$ \ 
+
+Thus at time $t$, applying the time evolution operator, the state of the particle is:
+
+$$
+\begin{aligned}
+	\ket{\psi(t)} &= e^{-i\hat H t / \hbar} \Bigg( \frac{1}{2\sqrt 2} \ket{\frac 32, \frac 32}_z + \frac{\sqrt 3}{2\sqrt 2} \ket{\frac 32 , \frac 12}_z \\ 
+	&\hspace{3cm} + \frac{\sqrt 3}{2\sqrt 2} \ket{\frac 32 , -\frac 12}_z + \frac{1}{2\sqrt 2} \ket{\frac 32 , -\frac 32}_z \Bigg)
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+	&= \frac{e^{-3i \omega_0 t / 2}}{2\sqrt 2} \ket{\frac 32, \frac 32}_z + \frac{\sqrt 3 e^{-i \omega_0 t / 2}}{2\sqrt 2} \ket{\frac 32 , \frac 12}_z \\ 
+	&\hspace{2cm} + \frac{\sqrt 3 e^{i \omega_0 t / 2}}{2\sqrt 2} \ket{\frac 32 , -\frac 12}_z + \frac{e^{3i \omega_0 t / 2}}{2\sqrt 2} \ket{\frac 32, -\frac 32}_z
+\end{aligned}
+$$ \ 
+
+The probability amplitude to find the particle in state $\ket{\frac 32, -\frac 32}$ is:
+
+$$\bra{\frac 32, -\frac 32}\ket{\psi(t)}$$ \ 
+
+where the bra vector $\bra{\frac 32, -\frac 32}$ in the $S_z$ basis is:
+
+$$
+\begin{aligned}
+	\bra{\frac 32, -\frac 32}_x &= \Bigg( \frac{1}{2\sqrt 2} \bra{\frac 32, \frac 32}_z - \frac{\sqrt 3}{2\sqrt 2} \bra{\frac 32, \frac 12}_z \\ 
+	&\hspace{1.5cm}+ \frac{\sqrt 3}{2\sqrt 2} \bra{\frac 32, -\frac 12}_z - \frac{1}{2\sqrt 2}\bra{\frac 32, -\frac 32}_z \Bigg)
+\end{aligned}
+$$ \ 
+
+Taking the product $\bra{\frac 32, -\frac 32}\ket{\psi(t)}$ gives the probability amplitude as:
+
+$$
+\begin{bmatrix}
+	\frac{1}{2\sqrt 2}  & -\frac{\sqrt 3}{2\sqrt 2} & \frac{\sqrt 3}{2\sqrt 2} & -\frac{1}{2\sqrt 2}  
+\end{bmatrix}
+\begin{bmatrix}
+	\frac{e^{-3i \omega_0 t / 2}}{2\sqrt 2} \\ 
+	\frac{\sqrt 3 e^{-i \omega_0 t / 2}}{2\sqrt 2} \\ 
+	\frac{\sqrt 3 e^{i \omega_0 t / 2}}{2\sqrt 2} \\ 	
+	\frac{e^{3i \omega_0 t / 2}}{2\sqrt 2}
+\end{bmatrix}
+$$
+
+$$= \frac{e^{-3i \omega_0 t / 2}}{8} - \frac{3e^{-i \omega_0 t / 2}}{8} + \frac{3e^{i \omega_0 t / 2}}{8} - \frac{e^{3i \omega_0 t / 2}}{8}$$ \\ 
+ 
+Setting $t = \frac{\pi}{\omega_0}$, this amplitude becomes zero. \\ 
+
+Thus the probability that the particle is in the state $\ket{\frac 32, -\frac 32}$ at time $t$ is zero. This makes sense as the states $\ket{\frac 32, -\frac 32}$ and $\ket{\frac 32, \frac 32}$ are orthogonal.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{multicols*}
+
+\end{document}
+
+
+
