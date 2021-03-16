@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "$#" -ne 2 ]; then
+	echo "Invalid parameters"
+	echo "Usage: grade <dir> <-i|-g|-f>"
+	exit
+fi
+
+echo $1
+echo $2
+
+dir=$1
+
+script_name1=`basename $0`
+script_name2=`basename "$(realpath $0)"`
+
+echo $script_name1
+echo $script_name2

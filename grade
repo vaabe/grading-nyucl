@@ -1,11 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-inprogressfile=./$1/inprogress
-
-if [ ! -f "$inprogressfile" ]; then
-	echo "Cannot grade. Problem set directory not initialised."
-else
-	direcs=("./$1/*/")
-	Rscript ./src/grade.R $direcs
-	julia ./src/distr.jl $1
+if [ "$#" -ne 2 ]; then
+	echo "Invalid parameters"
+	echo "Usage: grade <dir> <-s|-g|-f>"
+	exit
 fi
+
+reportdir=$1
+mode=$2
+srcdir="${HOME}/bin/grading"
+
+make -C "${HOME}/bin/grading" start

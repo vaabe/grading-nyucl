@@ -1,18 +1,12 @@
 #!/bin/bash
 
-inprogressfile=./$1/inprogress
+linkdir="${HOME}/bin"
 
-if [ -f "$inprogressfile" ]; then
-	echo "Halt! Grading in progress. Cannot initialise."
-else
-	for dir in ./$1/*/; do
-		touch "$dir/Feedback Attachment(s)/comments.txt"
-		echo "0" > "$dir/Feedback Attachment(s)/comments.txt"
-	done
+mkdir -p "${linkdir}/grading"
+srcdir="${linkdir}/grading"
 
-	touch $inprogressfile
-	gradefilemeta=$(head -n 1 ./$1/grades.csv)
-	echo "$gradefilemeta" > $inprogressfile
-
-	Rscript ./src/clean.R $1
-fi
+ln -sf "${PWD}/grade" "${linkdir}/"
+ln -sf "${PWD}/grading.c" "${srcdir}/"
+ln -sf "${PWD}/Makefile" ${srcdir}/ 
+ln -sf "${PWD}/gradecomments.latex" ${srcdir}/ 
+ln -sf "${PWD}/mdgrade" ${srcdir}/
