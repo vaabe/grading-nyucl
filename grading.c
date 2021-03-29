@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 	snprintf(
 		reportDirPath, 
 		sizeof(reportDirPath), 
-		"/home/v/gp/rep/02/"
+		"/home/v/gp/rep/03-011/"
 		); 
 
 	FILE *gradeFile = fopen(join_paths(reportDirPath, "grades.csv"), "r"); 
