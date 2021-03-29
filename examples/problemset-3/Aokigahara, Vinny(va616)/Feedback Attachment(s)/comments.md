@@ -1,0 +1,15 @@
+## COMMENTS
+
+- very nice
+- the instability of this problem leaves me with a lot of very big unanswered questions about the nature of this shiz. 
+- who the fuck are you anyway?
+
+## GRADE
+
+----        ----
+theory        -1
+analysis    -0.5
+total         8.5
+----        ----
+
+better luck next time, twat

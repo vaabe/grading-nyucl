@@ -1,0 +1,9 @@
+#!/bin/bash
+
+linkdir="${HOME}/bin"
+srcdir="${linkdir}/grading"
+
+mkdir -p $srcdir
+
+ln -sf ${PWD}/grade ${linkdir}/
+ln -sf ${PWD}/src/* ${srcdir}/

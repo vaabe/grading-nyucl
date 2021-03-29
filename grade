@@ -1,0 +1,57 @@
+#!/bin/bash
+
+if [ "$#" != 2 ] ; then 
+	echo "incorrect parameters"
+	exit 1
+fi
+
+mode=$1
+hwname=$2
+hwdir="$(realpath $2)"
+
+srcdir="${HOME}/bin/grading"
+
+convert_md_to_pdf() {
+	for dir in $hwdir/*/ ; do
+		cd "${dir}/Feedback Attachment(s)"
+		mdpdf comments.md -t gr
+		cd ../../
+	done
+}
+
+updir=${hwdir}-upload
+
+make_upload_dir() {
+	cp -r $hwdir $updir
+	for dir in $updir/*/ ; do
+		rm "${dir}/Feedback Attachment(s)/comments.txt"
+		cd ../../
+	done
+	rm "${updir}/grades.csv"
+	rm "${updir}/inprogress"
+	mv "${updir}/grades2.csv" "${updir}/grades.csv"
+}
+
+while getopts "ispu" opt; do
+	case ${opt} in
+		i)
+			echo "Initializing..."
+			make -C "${HOME}/bin/grading" init
+			;;
+		s)
+			echo "Saving grades to grades.csv..."
+			make -C "${HOME}/bin/grading" save
+			;;
+		p)
+			echo "Converting md to pdf..."
+			convert_md_to_pdf
+			;;
+		u)
+			echo "Making upload dir..."
+			make_upload_dir
+			;;
+		\?)
+			echo -e "\nYou twat."
+			;;
+	esac
+done

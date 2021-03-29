@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 	snprintf(
 		hwDirPath, 
 		sizeof(hwDirPath), 
-		"/home/v/de/grading/ps3/"
+		"/home/v/de/grading/examples/problemset-3/"
 		); 
 
 	FILE *gradeFile = fopen(join_paths(hwDirPath, "grades.csv"), "r"); 
@@ -402,4 +402,3 @@ int main(int argc, char *argv[])
 #endif
 
 }
-
