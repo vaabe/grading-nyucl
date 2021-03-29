@@ -2,10 +2,14 @@
 
 A grading workflow with NYU Classes. 
 
-`./init` to add scripts to $PATH. 
+`./init` to add scripts to `$PATH`. 
 
-`grade -s` to create a `comments.md` file template in each student directory, and an "inprogress" indicator to prevent accidental overwrites. 
+```
+Usage: grade <mode> <dir>
 
-`grade -g` to loop through comments files, extract the grade, record in data library. 
-
-`grade -f` to reconvert files back to format required by Classes. 
+modes:
+	-i		initialize (make comments.txt file for each student) 
+	-g		parse comments for each student and save grades
+	-p		made pdfs (convert markdown files to pdf)
+	-u		create upload directory (required format for uploading)	
+```
