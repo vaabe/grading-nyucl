@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-// #include <dirent.h>
 #include "stringing.h"
 
 #define MAXBUF 200
+#define MAXLINES 100
 
 enum LineType {
 	empty = 0, 
@@ -16,8 +16,9 @@ enum LineType {
 }; 
 
 struct Feedback {
-	char text[MAXBUF]; 
-	enum LineType type; 
+	char comment[MAXLINES][MAXBUF]; 
+	char grade[MAXLINES][MAXBUF]; 
+	char extra[MAXLINES][MAXBUF]; 
 }; 
 
 struct Student {
@@ -27,9 +28,9 @@ struct Student {
 	int numComments; 
 	int numGrades; 
 	int numExtras; 
-	struct Feedback *comments;  
-	struct Feedback *grades; 
-	struct Feedback *extras; 
+	struct Feedback feedback;  
+	float fgrade; 
+	char agrade; 
 	char *token[7]; 
 	char *displayid; 
 	char *id; 
@@ -39,11 +40,6 @@ struct Student {
 	char *subdate; 
 	char *late; 
 }; 
-
-//struct Submission {
-//	char *dir; 
-//	char *id; 
-//}; 
 
 int get_num_students(char hwDirPath[]) {
 	FILE *gradeFile = fopen(join_paths(hwDirPath, "grades.csv"), "r"); 
@@ -114,6 +110,8 @@ int main(int argc, char *argv[])
 
 		student[i].dirpath = join_paths(hwDirPath, student[i].dirname); 
 	}
+
+	fclose(gradeFile); 
 
 #ifdef INIT
 	FILE *inprogressFile; 
@@ -246,161 +244,162 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		student[i].comments = malloc(
-				student[i].numComments 
-				* sizeof(struct Feedback)
-				); 
-		student[i].grades = malloc(
-				student[i].numGrades
-				* sizeof(struct Feedback)
-				); 
-		student[i].extras = malloc(
-				student[i].numExtras 
-				* sizeof(struct Feedback)
-				); 
+		fclose(feedbackFile); 
+
+		// for (int j = 0; j < numLines; j++) printf("%d\n", linetype[j]); 
+
+		feedbackFile = fopen(feedbackPath, "r"); 
+		int cind = 0; 
+		int gind = 0; 
+		int eind = 0; 
+
+		for (int j = 0; j < numLines; j++) {
+			fgets(buffer, sizeof(buffer), feedbackFile); 
+
+			if (linetype[j] == comment) {
+				strcpy(student[i].feedback.comment[cind], buffer); 
+				cind++; 
+			}
+
+			if (linetype[j] == grade) {
+				strcpy(student[i].feedback.grade[gind], buffer); 
+				gind++; 
+			}
+
+			if (linetype[j] == extra) {
+				strcpy(student[i].feedback.extra[eind], buffer); 
+				eind++; 
+			}
+		}
 
 		fclose(feedbackFile); 
+
+		int gradeind = student[i].numGrades - 1; 
+		char *gradetoken[2]; 
+
+		// printf("%s\n", student[i].feedback.grade[gradeind]); 
+
+ 		int j = 0; 
+ 		gradetoken[j] = strtok(student[i].feedback.grade[gradeind], ","); 
+ 		while (gradetoken[j] != NULL) {
+ 			gradetoken[++j] = strtok(NULL, ", "); 
+ 		}
+
+		student[i].grade = gradetoken[1]; 
+
+		student[i].grade[strlen(student[i].grade) - 1] = 0; 
+
+		student[i].token[1] = join_paths(student[i].token[1], "\""); 
+		student[i].token[2] = join_paths(student[i].token[2], "\""); 
+		student[i].token[3] = join_paths(student[i].token[3], "\""); 
+
+		if (strcmp(student[i].grade, "-") != 0) {
+			student[i].token[4] = student[i].grade; 
+		}
+
+		char *gradetmp1 = malloc(sizeof(gradetoken[0])); 
+		char *gradetmp2 = malloc(sizeof(gradetoken[1]));   
+
+		strcpy(gradetmp1, gradetoken[0]); 
+		strcpy(gradetmp2, gradetoken[1]); 
+
+		strcpy(student[i].feedback.grade[gradeind], join_paths(gradetmp1, ", "));  
+
+		strcpy(student[i].feedback.grade[gradeind], join_paths(
+				student[i].feedback.grade[gradeind], gradetmp2)); 
+
 	}
 
-#endif
+	gradeFile = fopen(join_paths(hwDirPath, "grades2.csv"), "w"); 
+	FILE *inprogressFile = fopen(join_paths(hwDirPath, "inprogress"), "r"); 
+	fgets(meta[0], sizeof(meta[0]), inprogressFile); 
+	fclose(inprogressFile); 
 
-}
-
-#if 0
-int main(int argc, char *argv[]) 
-{
-	char hwDirPath[MAXBUF]; 
-	snprintf(
-		hwDirPath, 
-		sizeof(hwDirPath), 
-		"/home/v/gp/rep/03-011/"
-		); 
-
-	FILE *gradeFile = fopen(join_paths(hwDirPath, "grades.csv"), "r"); 
-	if (!gradeFile) {
-		perror("No grade file (grades.csv)"); 
-		exit(0); 
-	}
-
-	char meta[3][MAXBUF]; // metadata at top of grades.csv file
 	for (int i = 0; i < 3; i++) {
-		fgets(meta[i], sizeof(meta[i]), gradeFile); 
+		fprintf(gradeFile, "%s", meta[i]); 
 	}
-
-	int numStudents = get_num_students(hwDirPath); 
-	struct Student *student = malloc(numStudents * sizeof(struct Student)); 
-	char studentDirPath[numStudents][MAXBUF]; 	
 
 	for (int i = 0; i < numStudents; i++) {
-		fgets(student[i].buffer, sizeof(student[i].buffer), gradeFile); 
-
-		int j = 0; 
-		student[i].token[j] = strtok(student[i].buffer, ","); 
-		while (student[i].token[j] != NULL) {
-			student[i].token[++j] = strtok(NULL, ","); 
-		}
-
-		student[i].displayid = student[i].token[0]; 
-		student[i].id = student[i].token[1]; 
-		student[i].lastname = student[i].token[2]; 
-		student[i].firstname = student[i].token[3]; 
-		student[i].grade = student[i].token[4]; 
-		student[i].subdate = student[i].token[5]; 
-		student[i].late = student[i].token[6]; 
-
-		char *lastname_clean = malloc(sizeof(student[i].lastname));  
-		lastname_clean = student[i].lastname; 
-		lastname_clean += 1; 
-		lastname_clean[strlen(lastname_clean) - 1] = 0; 
-
-		char *firstname_clean = malloc(sizeof(student[i].firstname));
-		firstname_clean = student[i].firstname; 
-		firstname_clean += 1; 
-		firstname_clean[strlen(firstname_clean) - 1] = 0; 
-
-		char *id_clean = malloc(sizeof(student[i].id));
-		id_clean = student[i].id; 
-		id_clean += 1; 
-		id_clean[strlen(id_clean) - 1] = 0; 
-
-		snprintf(studentDirPath[i], 
-				sizeof(studentDirPath[i]), 
-				"%s, %s(%s)/", 
-				lastname_clean, 
-				firstname_clean, 
-				id_clean); 
-		student[i].dirpath = join_paths(hwDirPath, studentDirPath[i]); 
+		fprintf(gradeFile, 
+			"%s,%s,%s,%s,%s,%s,%s", 
+			student[i].token[0],
+			student[i].token[1],
+			student[i].token[2],
+			student[i].token[3],
+			student[i].token[4],
+			student[i].token[5],
+			student[i].token[6]
+		); 
 	}
-
-//	for (int i = 0; i < numStudents; i++)
-//		printf("%s\n", student[i].dirpath); 
-
-//	DIR *assignmentDir = opendir(dirpath); 
-//	if (!assignmentDir) {
-//		perror("Something is wrong"); 
-//		exit(0); 
-//	}
-
-#ifdef START
-	FILE *inprogressFile; 
-	int inprogressIndicator;  
-	if (inprogressFile = fopen(
-				join_paths(hwDirPath, "inprogress"), "r")) {
-		fclose(inprogressFile); 
-		inprogressIndicator = 1; 
-	}
-	else {
-		inprogressIndicator = 0; 
-	}
-
-	if (inprogressIndicator == 0) {
-		printf("'START'\n"); 
-		printf("Creating comments.md file in each student directory... \n"); 
-
-		for (int i = 0; i < numStudents; i++) {
-			char commentsPath[MAXBUF]; 
-			snprintf(
-				commentsPath, 
-				sizeof(commentsPath), 
-				"%s%s", 
-				student[i].dirpath, 
-				"Feedback Attachment(s)/"
-				); 
-
-			FILE *commentsFile = fopen(
-					join_paths(commentsPath, "comments.md"), "w"); 
-
-			fprintf(
-				commentsFile,
-				"%s%s%s%s%s%s%s", 
-				"## COMMENTS\n\n\n\n", 
-				"## GRADE\n\n",
-				"----        ----\n",
-				"theory      -\n", 
-				"analysis    -\n", 
-				"total       -\n",
-				"----        ----"
-				); 
-
-			fclose(commentsFile); 
-		}
-
-		printf("Creating inprogress file...\n"); 
-		FILE *inprogressFile = fopen(
-				join_paths(hwDirPath, "inprogress"), "w"); 
-
-		fprintf(inprogressFile, "%s%s%s", meta[0], meta[1], meta[2]); 
-		fclose(inprogressFile); 
-	}
-
-	else {
-		printf("Halt! Grading in progress (inprogress file exists)\n"); 
-		exit(0); 
-	}
-	
-#endif
 
 	fclose(gradeFile); 
-	// closedir(reportDir); 
-}
+
+	for (int i = 0; i < numStudents; i++) {
+		FILE *mdFile = fopen(join_paths(
+				student[i].dirpath, 
+				"Feedback Attachment(s)/comments.md"
+				), "w"); 
+
+		if (!mdFile) {
+			perror("mdfile error"); 
+			exit(0); 
+		}
+
+		fprintf(mdFile, "%s\n\n", "## COMMENTS"); 
+
+		for (int j = 0; j < student[i].numComments; j++) {
+			fprintf(
+				mdFile, 
+				"%s %s", 
+				"-", 
+				student[i].feedback.comment[j]
+			); 
+		}
+
+		fprintf(
+			mdFile, 
+			"\n%s\n\n%s\n", 
+			"## GRADE",
+			"----        ----"
+		); 
+
+		for (int j = 0; j < student[i].numGrades; j++) {
+			char *token[2]; 
+			int k = 0; 
+			token[k] = strtok(student[i].feedback.grade[j], ","); 
+			while (token[k] != NULL) {
+				token[++k] = strtok(NULL, ", "); 
+			}
+
+			int len0 = strlen(token[0]); 
+			int len1 = strlen(token[1]); 
+			int diff = 17 - len0 - len1; 
+
+			fprintf(mdFile, "%s", token[0]); 
+
+			for (int l = 0; l < diff; l++) {
+				fprintf(mdFile, "%c", ' '); 
+			}
+
+			fprintf(mdFile, "%s", token[1]); 
+		}
+
+		fprintf(
+			mdFile, 
+			"\n%s\n", 
+			"----        ----"
+		); 
+
+		for (int j = 0; j < student[i].numExtras; j++) {
+			fprintf(
+				mdFile, 
+				"\n%s", 
+				student[i].feedback.extra[j]
+			); 
+		}
+	}
+
 #endif
+
+}
+
