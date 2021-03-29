@@ -1,11 +1,10 @@
 ## COMMENTS
 
 
-
 ## GRADE
 
 ----        ----
-theory      -
-analysis    -
-total       -
+theory         -
+analysis       -
+total           -
 ----        ----

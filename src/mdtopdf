@@ -1,0 +1,26 @@
+#!/bin/bash
+
+infile=$1
+mdfile=""
+
+if [[ $infile == *".md"* ]]; then
+	mdfile=$infile
+elif [[ $infile == *. ]]; then
+	mdfile="${infile}md"
+else
+	mdfile="${infile}.md"
+fi
+
+if [[ ! -f $mdfile ]]; then
+	echo "File $mdfile doesn't exist, twat"
+	exit 1
+fi
+
+shift
+
+pdffile="${mdfile::-2}pdf"
+texfile="${mdfile::-2}tex"
+template="gradecomments.latex"
+convert="${mdfile} -o ${pdffile}"
+
+pandoc $convert --template $template

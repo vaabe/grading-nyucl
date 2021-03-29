@@ -1,4 +1,6 @@
-Some scripts to streamline grading with NYU Classes. 
+# grading
+
+A grading workflow with NYU Classes. 
 
 `./init` to add scripts to $PATH. 
 

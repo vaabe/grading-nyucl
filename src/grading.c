@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include "stringing.h"
 
-#define MAXBUF 200
-#define MAXLINES 100
+#define MAXCHARS 8192
+#define MAXFBACK 100
 
 enum LineType {
 	empty = 0, 
@@ -16,15 +16,15 @@ enum LineType {
 }; 
 
 struct Feedback {
-	char comment[MAXLINES][MAXBUF]; 
-	char grade[MAXLINES][MAXBUF]; 
-	char extra[MAXLINES][MAXBUF]; 
+	char comment[MAXFBACK][MAXCHARS]; 
+	char grade[MAXFBACK][MAXCHARS]; 
+	char extra[MAXFBACK][MAXCHARS]; 
 }; 
 
 struct Student {
-	char dirname[MAXBUF]; 
+	char dirname[MAXCHARS]; 
 	char *dirpath; 
-	char buffer[MAXBUF]; 
+	char buffer[MAXCHARS]; 
 	int numComments; 
 	int numGrades; 
 	int numExtras; 
@@ -48,7 +48,7 @@ int get_num_students(char hwDirPath[]) {
 		exit(0); 
 	}
 
-	char buffer[MAXBUF]; 
+	char buffer[MAXCHARS]; 
 	int n = 0; 
 	while (fgets(buffer, sizeof(buffer), gradeFile) != NULL) {
 		n++; 
@@ -60,11 +60,11 @@ int get_num_students(char hwDirPath[]) {
 
 int main(int argc, char *argv[])
 {
-	char hwDirPath[MAXBUF]; 
+	char hwDirPath[MAXCHARS]; 
 	snprintf(
 		hwDirPath, 
 		sizeof(hwDirPath), 
-		"/home/v/de/grading/examples/problemset-3/"
+		"/home/v/de/grading/examples/problemset-1/"
 		); 
 
 	FILE *gradeFile = fopen(join_paths(hwDirPath, "grades.csv"), "r"); 
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	}
 
 	// metadata at top of grades.csv file
-	char meta[3][MAXBUF]; 
+	char meta[3][MAXCHARS]; 
 	for (int i = 0; i < 3; i++) {
 		fgets(meta[i], sizeof(meta[i]), gradeFile); 
 	}
@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
 	fclose(gradeFile); 
 
 #ifdef INIT
+
 	FILE *inprogressFile; 
 	int inprogressIndicator;  
 	if (inprogressFile = fopen(join_paths(hwDirPath, "inprogress"), "r")) {
@@ -125,11 +126,10 @@ int main(int argc, char *argv[])
 	}
 
 	if (inprogressIndicator == 0) {
-		printf("Mode: START\n"); 
-		printf("Creating comments.md file in each student directory... \n"); 
+		printf("\nCreating comments.txt file in each student directory... "); 
 
 		for (int i = 0; i < numStudents; i++) {
-			char commentsPath[MAXBUF]; 
+			char commentsPath[MAXCHARS]; 
 			snprintf(
 				commentsPath, 
 				sizeof(commentsPath), 
@@ -156,23 +156,40 @@ int main(int argc, char *argv[])
 			fclose(commentsFile); 
 		}
 
-		printf("Creating inprogress file...\n"); 
+		printf("Done.\n"); 
+		printf("Creating \"inprogress\" file... "); 
+
 		FILE *inprogressFile = fopen(
 				join_paths(hwDirPath, "inprogress"), "w"); 
 
 		fprintf(inprogressFile, "%s%s%s", meta[0], meta[1], meta[2]); 
 		fclose(inprogressFile); 
+
+		printf("Done.\n"); 
+		printf(
+			"\nThe bollards are down! "
+			"You are ready to start grading.\n"
+			); 
+
 	}
 
 	else {
-		printf("Halt! Grading in progress (inprogress file exists)\n"); 
+		printf("\nHalt! Grading in progress.\n"); 
+		printf(
+			"If you actually want to delete all progress "
+		   	"and start again, delete the \"inprogress\" file.\n\n"
+			); 	
 		exit(0); 
 	}
+
 #endif
 
 #ifdef SAVE
+
+	printf("\nReading the \"comments.txt\" file for each student... "); 
+
 	for (int i = 0; i < numStudents; i++) {
-		char feedbackPath[MAXBUF]; 
+		char feedbackPath[MAXCHARS]; 
 		snprintf(
 			feedbackPath, 
 			sizeof(feedbackPath), 
@@ -191,11 +208,12 @@ int main(int argc, char *argv[])
 		int numLines = get_num_lines(feedbackPath); 
 		enum LineType sectiontype; 
 		enum LineType linetype[numLines]; 
-		char buffer[MAXBUF]; 
+		char buffer[MAXCHARS]; 
 
 		student[i].numComments = 0; 
 		student[i].numGrades = 0; 
 		student[i].numExtras = 0; 
+
 
 		for (int j = 0; j < numLines; j++) {
 			fgets(buffer, sizeof(buffer), feedbackFile); 
@@ -310,6 +328,9 @@ int main(int argc, char *argv[])
 
 	}
 
+	printf("Done.\n"); 
+	printf("Saving grades in \"grades2.csv\" file... "); 
+
 	gradeFile = fopen(join_paths(hwDirPath, "grades2.csv"), "w"); 
 	FILE *inprogressFile = fopen(join_paths(hwDirPath, "inprogress"), "r"); 
 	fgets(meta[0], sizeof(meta[0]), inprogressFile); 
@@ -333,6 +354,8 @@ int main(int argc, char *argv[])
 	}
 
 	fclose(gradeFile); 
+	printf("Done.\n"); 
+	printf("Rewriting comments to a \"comments.md\" file... "); 
 
 	for (int i = 0; i < numStudents; i++) {
 		FILE *mdFile = fopen(join_paths(
@@ -399,6 +422,10 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	printf("Done.\n"); 
+
 #endif
+
+	printf("\n"); 
 
 }

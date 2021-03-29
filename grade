@@ -1,25 +1,42 @@
 #!/bin/bash
 
+modes=(\
+	"-i 	initialize (make comments.txt file for each student)"\
+	"-g	parse comments for each student and save grades"\
+	"-p 	make pdfs (convert markdown files to pdf)"\
+	"-u	create upload directory (required format for uploading)"\
+)
+
+usage_message() {
+	echo -e "\nUsage: grade <mode> <dir>\n"
+	echo "modes:"
+	for i in "${modes[@]}"; do
+		echo "    $i"
+	done
+	echo ""
+	exit
+}
+
 if [ "$#" != 2 ] ; then 
-	echo "incorrect parameters"
+	usage_message
 	exit 1
 fi
 
 mode=$1
-hwname=$2
+dirname=$2
 hwdir="$(realpath $2)"
-
+updir=${hwdir}-upload
 srcdir="${HOME}/bin/grading"
 
 convert_md_to_pdf() {
 	for dir in $hwdir/*/ ; do
 		cd "${dir}/Feedback Attachment(s)"
+		echo "Directory: ${dir}"
 		mdpdf comments.md -t gr
 		cd ../../
+		echo ""
 	done
 }
-
-updir=${hwdir}-upload
 
 make_upload_dir() {
 	cp -r $hwdir $updir
@@ -30,24 +47,26 @@ make_upload_dir() {
 	rm "${updir}/grades.csv"
 	rm "${updir}/inprogress"
 	mv "${updir}/grades2.csv" "${updir}/grades.csv"
+	echo -e "Upload directory created: ${updir}"
+	echo ""
 }
 
-while getopts "ispu" opt; do
+while getopts "igpu" opt; do
 	case ${opt} in
 		i)
-			echo "Initializing..."
+			echo -e "\nInitializing...\n"
 			make -C "${HOME}/bin/grading" init
 			;;
-		s)
-			echo "Saving grades to grades.csv..."
+		g)
+			echo -e "\nParsing comments...\n"
 			make -C "${HOME}/bin/grading" save
 			;;
 		p)
-			echo "Converting md to pdf..."
+			echo -e "\nConverting markdown files to pdf...\n"
 			convert_md_to_pdf
 			;;
 		u)
-			echo "Making upload dir..."
+			echo -e "\nMaking upload directory..."
 			make_upload_dir
 			;;
 		\?)
