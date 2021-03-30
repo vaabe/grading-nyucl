@@ -25,7 +25,7 @@ fi
 mode=$1
 hwdirname=$2
 hwdir="$(realpath $2)"
-updir=${hwdir}-upload
+updir=""
 srcdir="${HOME}/bin/grading"
 
 convert_md_to_pdf() {
@@ -39,9 +39,11 @@ convert_md_to_pdf() {
 }
 
 make_upload_dir() {
+	mkdir -p "${PWD}/uploads"
+	updir="${PWD}/uploads/$hwdirname"
 	cp -r $hwdir $updir
 	for dir in $updir/*/ ; do
-		rm "${dir}/Feedback Attachment(s)/comments.txt"
+		rm "${dir}Feedback Attachment(s)/comments.txt"
 		cd ../../
 	done
 	rm "${updir}/grades.csv"
@@ -55,9 +57,9 @@ while getopts "igpu" opt; do
 	case ${opt} in
 		i)
 			echo -e "\nInitializing..."
-			#make -C "${HOME}/bin/grading" init
-			cc ${srcdir}/grading.c -DINIT
-			${srcdir}/a.out
+			make -C "${HOME}/bin/grading" init
+			#cc ${srcdir}/grading.c -DINIT
+			#${srcdir}/a.out $hwdir
 			;;
 		g)
 			echo -e "\nParsing comments...\n"

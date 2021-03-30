@@ -64,7 +64,8 @@ int main(int argc, char *argv[])
 	snprintf(
 		hwDirPath, 
 		sizeof(hwDirPath), 
-		"/home/v/de/grading/examples/problemset-2/"
+		// argv[1]
+		"/home/v/gp/grading/03-04/"
 		); 
 
 	FILE *gradeFile = fopen(join_paths(hwDirPath, "grades.csv"), "r"); 
@@ -168,7 +169,7 @@ int main(int argc, char *argv[])
 		printf("Done.\n"); 
 		printf(
 			"\nThe bollards are down! "
-			"You are ready to start grading.\n"
+			"Ready to start grading.\n"
 			); 
 
 	}
