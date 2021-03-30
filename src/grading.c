@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 	snprintf(
 		hwDirPath, 
 		sizeof(hwDirPath), 
-		"/home/v/de/grading/examples/problemset-1/"
+		"/home/v/de/grading/examples/problemset-2/"
 		); 
 
 	FILE *gradeFile = fopen(join_paths(hwDirPath, "grades.csv"), "r"); 
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (inprogressIndicator == 0) {
-		printf("\nCreating comments.txt file in each student directory... "); 
+		printf("Creating comments.txt file in each student directory... "); 
 
 		for (int i = 0; i < numStudents; i++) {
 			char commentsPath[MAXCHARS]; 
@@ -143,8 +143,8 @@ int main(int argc, char *argv[])
 
 			fprintf(
 				commentsFile,
-				"%s%s%s%s%s%s%s", 
-				"## COMMENTS\n\n\n\n", 
+				"%s%s%s%s%s%s%s%s", 
+				"## COMMENTS\n\n", 
 				"## GRADE\n\n",
 				"theory, -\n", 
 				"analysis, -\n", 

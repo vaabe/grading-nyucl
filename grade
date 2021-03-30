@@ -8,7 +8,7 @@ modes=(\
 )
 
 usage_message() {
-	echo -e "\nUsage: grade <mode> <dir>\n"
+	echo -e "\nUsage: grade <mode> <hwdir>\n"
 	echo "modes:"
 	for i in "${modes[@]}"; do
 		echo "    $i"
@@ -23,7 +23,7 @@ if [ "$#" != 2 ] ; then
 fi
 
 mode=$1
-dirname=$2
+hwdirname=$2
 hwdir="$(realpath $2)"
 updir=${hwdir}-upload
 srcdir="${HOME}/bin/grading"
@@ -54,8 +54,10 @@ make_upload_dir() {
 while getopts "igpu" opt; do
 	case ${opt} in
 		i)
-			echo -e "\nInitializing...\n"
-			make -C "${HOME}/bin/grading" init
+			echo -e "\nInitializing..."
+			#make -C "${HOME}/bin/grading" init
+			cc ${srcdir}/grading.c -DINIT
+			${srcdir}/a.out
 			;;
 		g)
 			echo -e "\nParsing comments...\n"
