@@ -20,12 +20,6 @@ char *remove_quotes(char c1[]) {
 	return c2; 
 }
 
-//char *add_quote_to_end(char c1[]) {
-//	char *c2 = malloc(strlen(c1) + strlen('"') + 1); 
-//	c2[strlen(c2) - 1] = '"'; 
-//	return c2; 
-//}
-
 int get_num_lines(char filepath[])
 {
 	FILE *file = fopen(filepath, "r"); 
