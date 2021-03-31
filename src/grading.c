@@ -91,6 +91,8 @@ void grading_init(char hwDirPath[])
 		student[i].subdate = student[i].gradestoken[5]; 
 		student[i].late = student[i].gradestoken[6]; 
 
+		// this fucking seg faults. 
+		// specifically: the remove_quotes function is what causes it!
 		snprintf(
 			student[i].dirname, 
 			sizeof(student[i].dirname), 
