@@ -1,6 +1,6 @@
 # grading
 
-A (slightly absurd) terminal grading workflow for NYU Classes. I made this to speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
+A (slightly absurd) terminal grading workflow for NYU Classes. I made this to speed up grading long-form assignments (e.g. lab reports, project essays, etc). It's mostly written in C and Bash, and works (well?) on Linux i3. 
 
 `./init` to add scripts to `$PATH`. 
 
