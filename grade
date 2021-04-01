@@ -45,7 +45,9 @@ convert_md_to_pdf() {
 	for dir in $hwdir/*/ ; do
 		cd "${dir}/Feedback Attachment(s)"
 		echo "Directory: ${dir}"
-		mdpdf comments.md -t gr
+		#mdpdf comments.md -t gr
+		pandoc comments.md -o comments.pdf\
+			--template ${srcdir}/resources/gradecomments.latex
 		cd ../../
 		echo ""
 	done
