@@ -7,9 +7,9 @@ A (slightly absurd) terminal grading workflow for NYU Classes. I made this to he
 ```
 ./init to add scripts to $PATH. 
 
-Usage: grade <mode> <dir>
+Usage: grade [options] <dir>
 
-modes:
+options:
 	-i		initialize (make comments.txt file for each student) 
 	-g		parse comments for each student and save grades
 	-p		made pdfs (convert markdown files to pdf)
