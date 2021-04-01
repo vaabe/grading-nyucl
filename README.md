@@ -4,8 +4,6 @@ A (slightly absurd) terminal grading workflow for NYU Classes. I made this to he
 
 ![](./media/interface.png)
 
-## usage
-
 ```
 ./init to add scripts to $PATH. 
 
