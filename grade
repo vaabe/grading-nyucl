@@ -1,32 +1,45 @@
 #!/bin/bash
 
-modes=(\
-	"-i 	initialize (make comments.txt file for each student)"\
+hwdir=""
+updir=""
+srcdir="${HOME}/bin/grading"
+
+yellow=$(tput setaf 3)
+white=$(tput sgr0)
+
+options=(\
+	"-c 	configure directory"\
 	"-g	parse comments for each student and save grades"\
 	"-p 	make pdfs (convert markdown files to pdf)"\
 	"-u	create upload directory (required format for uploading)"\
 )
 
 usage_message() {
-	echo -e "\nUsage: grade <mode> <hwdir>\n"
-	echo "modes:"
-	for i in "${modes[@]}"; do
+	echo -e "\nUsage: grade [option] <homework dir>\n"
+	echo "options:"
+	for i in "${options[@]}"; do
 		echo "    $i"
 	done
 	echo ""
 	exit
 }
 
-if [ "$#" != 2 ] ; then 
-	usage_message
-	exit 1
-fi
+pithy_usage_message() {
+	echo -e "usage: grade [option] <homework dir>\n"
+}
 
-mode=$1
-hwdirname=$2
-hwdir="$(realpath $2)"
-updir=""
-srcdir="${HOME}/bin/grading"
+welcome_message() {
+	pithy_usage_message
+	printf "Welcome. 拿一个啤酒.\n"
+	printf "\nGrading directory: %s\n" "${hwdir}"
+}
+
+table_header() {
+	for i in {1..50} ; do
+		printf "-"
+	done
+	printf "\n"
+}
 
 convert_md_to_pdf() {
 	for dir in $hwdir/*/ ; do
@@ -39,42 +52,152 @@ convert_md_to_pdf() {
 }
 
 make_upload_dir() {
+	echo -e "\nMaking upload directory..."
 	mkdir -p "${PWD}/uploads"
-	updir="${PWD}/uploads/$hwdirname"
+
+	if [ -f "${PWD}/uploads/$1" ] ; then
+		rm "${PWD}/uploads/$1"
+	fi
+
+	updir="${PWD}/uploads/$1"
 	cp -r $hwdir $updir
 	for dir in $updir/*/ ; do
-		rm "${dir}Feedback Attachment(s)/comments.txt"
-		cd ../../
+		rm -f "${dir}Feedback Attachment(s)/comments.txt"
 	done
-	rm "${updir}/grades.csv"
-	rm "${updir}/inprogress"
-	mv "${updir}/grades2.csv" "${updir}/grades.csv"
+	rm -f "${updir}/grades.csv"
+	rm -f "${updir}/progress.csv"
+	mv "${updir}/grades-tmp.csv" "${updir}/grades.csv"
 	echo -e "Upload directory created: ${updir}"
 	echo ""
 }
 
-while getopts "igpu" opt; do
-	case ${opt} in
-		i)
-			echo -e "\nInitializing..."
-			make -C "${HOME}/bin/grading" init
-			#cc ${srcdir}/grading.c -DINIT
-			#${srcdir}/a.out $hwdir
-			;;
-		g)
-			echo -e "\nParsing comments...\n"
-			make -C "${HOME}/bin/grading" save
-			;;
-		p)
-			echo -e "\nConverting markdown files to pdf...\n"
-			convert_md_to_pdf
-			;;
-		u)
-			echo -e "\nMaking upload directory..."
-			make_upload_dir
-			;;
-		\?)
-			echo -e "\nYou twat."
-			;;
-	esac
+convert_md_to_pdf() {
+	for dir in $hwdir/*/ ; do
+		cd "${dir}/Feedback Attachment(s)"
+		echo "Directory: ${dir}"
+		mdpdf comments.md -t gr
+		cd ../../
+		echo ""
+	done
+}
+
+run_configure() {
+	echo -e "\nMode \"CONFIGURE\": configuring homework directory...\n\n"
+	cc ${srcdir}/grading.c -DCONFIGURE -o ${srcdir}/out
+	${srcdir}/out "${hwdir}/"
+}
+
+run_configure_quiet() {
+	cc ${srcdir}/grading.c -DCONFIGURE -o ${srcdir}/out
+	${srcdir}/out "${hwdir}/"
+}
+
+run_save() {
+	echo -e "\nMode \"SAVE\": saving current progress...\n"
+	cc ${srcdir}/grading.c -DSAVE -DVERBOSE -o ${srcdir}/out
+	${srcdir}/out "${hwdir}/"
+}
+
+run_save_quiet() {
+	cc ${srcdir}/grading.c -DSAVE -o ${srcdir}/out
+	${srcdir}/out "${hwdir}/"
+}
+
+
+###############################################################################
+# options parsing #
+###############################################################################
+
+if [[ "$#" == 0 || "$#" > 2 ]] ; then 
+	usage_message
+	exit 1
+fi
+
+
+if [ "$#" == 2 ] ; then
+	hwdir="$(realpath $2)"
+	while getopts "cspu" opt; do
+		case ${opt} in
+			c)
+				run_configure
+				;;
+			s)
+				run_save
+				;;
+			p)
+				convert_md_to_pdf
+				;; 
+			u)
+				make_upload_dir $2
+				;;
+			\?)
+				echo -e "\nYou twat."
+				;;
+		esac
+	done
+	exit 1
+fi
+
+
+###############################################################################
+# interface #
+###############################################################################
+
+hwdir="$(realpath $1)"
+progressfile="${hwdir}/progress.csv"
+
+studentdir=()
+i=0
+for dir in $hwdir/*/ ; do
+	#echo $dir
+	studentdir[$i]=$dir
+	i=`expr $i + 1`
+done
+numstudents=$i
+
+welcome_message
+
+run_checks() {
+	if ! [ -f "$progressfile" ]; then
+		echo -e "\nDirectory not configured yet."
+		echo -e "Configuring directory...\n"
+		run_configure_quiet
+	fi
+}
+
+show_selection() {
+	run_checks
+	printf "Current progress:\n\n"
+	printf "   %s     %s         %s\n" "#" "Grade" "Student"
+	echo ""
+	declare -i row=0
+	numgraded=0
+	while IFS=$',\n' read -r -a array; do
+		if [[ ${array[4]} == *"-" || ${array[4]} == *" " ]] ; then
+			printf "  ${yellow}[%s]    %s 	%s${white}"\
+				"${array[0]}" "${array[4]}" "${array[1]}"
+		else
+			printf "  [%s]    %s 	%s"\
+				"${array[0]}" "${array[4]}" "${array[1]}"
+			numgraded=`expr $numgraded + 1`
+		fi
+		echo ""
+	done < $progressfile
+	printf "\n  %s/%s graded.\n\n" "${numgraded}" "${numstudents}" 
+
+	read -p ":: Select student to grade: [enter #] " selection
+
+	realnumbers='^[0-9]+$'
+	if ! [[ $selection =~ $realnumbers ]] ; then
+		echo -e "\nInvalid input. Exiting."
+		exit 1
+	fi
+
+	selection=`expr $selection - 1`
+	vim "${studentdir[${selection}]}Feedback Attachment(s)/comments.txt" 
+	run_save_quiet
+}
+
+for i in {1..160} ; do
+	show_selection
 done
