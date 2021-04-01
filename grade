@@ -198,6 +198,6 @@ show_selection() {
 	run_save_quiet
 }
 
-for i in {1..160} ; do
+for i in {1..512} ; do
 	show_selection
 done
