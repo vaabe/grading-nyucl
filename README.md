@@ -5,7 +5,7 @@ A (slightly absurd) terminal grading workflow for NYU Classes. I made this to he
 ![](./media/interface.png)
 
 ```
-`./init` to add scripts to `$PATH`. 
+./init to add scripts to $PATH. 
 
 Usage: grade <mode> <dir>
 
