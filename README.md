@@ -1,6 +1,6 @@
 # grading
 
-A (slightly absurd) terminal grading workflow. I made this to speed up grading long-form assignments (lab reports, essays, etc) with NYU Classes.  
+A (slightly absurd) terminal grading workflow. I made this to speed up grading long-form assignments (e.g. lab reports, project essays, etc) with NYU Classes.  
 
 `./init` to add scripts to `$PATH`. 
 
