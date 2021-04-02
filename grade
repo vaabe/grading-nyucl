@@ -1,21 +1,27 @@
 #!/bin/bash
 
-hwdir=""
-updir=""
-srcdir="${HOME}/bin/grading"
+## vars ##
+
+pdfviewer=zathura
+docxviewer=libreoffice
 
 yellow=$(tput setaf 3)
 white=$(tput sgr0)
 
+## functions and def ##
+
 options=(\
-	"-c 	configure directory"\
-	"-g	parse comments for each student and save grades"\
-	"-p 	make pdfs (convert markdown files to pdf)"\
-	"-u	create upload directory (required format for uploading)"\
+	"-c|--configure 	set up directory"\
+	"-g|--grade 		comments selector"\	
+	"-v|--view		submissions selector"\
+	"-s|--save 		parse comments and save grades"\
+	"-p|--pdf 		convert markdown comments to pdf"\
+	"-t|--stats		show statistics"\
+	"-u|--upload		create upload directory"\
 )
 
 usage_message() {
-	echo -e "\nUsage: grade [option] <homework dir>\n"
+	echo -e "\nusage: grade <homework dir> [option]\n"
 	echo "options:"
 	for i in "${options[@]}"; do
 		echo "    $i"
@@ -25,11 +31,10 @@ usage_message() {
 }
 
 pithy_usage_message() {
-	echo -e "usage: grade [option] <homework dir>\n"
+	echo -e "usage: grade <homework dir> [option]\n"
 }
 
 welcome_message() {
-	pithy_usage_message
 	printf "Welcome. 拿一个啤酒.\n"
 	printf "\nGrading directory: %s\n" "${hwdir}"
 }
@@ -42,15 +47,16 @@ table_header() {
 }
 
 convert_md_to_pdf() {
+	echo -e "\nCreating comments.pdf file for each student...\n"
 	for dir in $hwdir/*/ ; do
 		cd "${dir}/Feedback Attachment(s)"
-		echo "Directory: ${dir}"
+		echo -e "   ${dir//"${hwdir}/"/}"
 		#mdpdf comments.md -t gr
 		pandoc comments.md -o comments.pdf\
 			--template ${srcdir}/resources/gradecomments.latex
 		cd ../../
-		echo ""
 	done
+	echo ""
 }
 
 make_upload_dir() {
@@ -63,9 +69,11 @@ make_upload_dir() {
 
 	updir="${PWD}/uploads/$1"
 	cp -r $hwdir $updir
+
 	for dir in $updir/*/ ; do
 		rm -f "${dir}Feedback Attachment(s)/comments.txt"
 	done
+
 	rm -f "${updir}/grades.csv"
 	rm -f "${updir}/progress.csv"
 	mv "${updir}/grades-tmp.csv" "${updir}/grades.csv"
@@ -73,105 +81,36 @@ make_upload_dir() {
 	echo ""
 }
 
-convert_md_to_pdf() {
-	for dir in $hwdir/*/ ; do
-		cd "${dir}/Feedback Attachment(s)"
-		echo "Directory: ${dir}"
-		mdpdf comments.md -t gr
-		cd ../../
-		echo ""
-	done
-}
-
 run_configure() {
-	echo -e "\nMode \"CONFIGURE\": configuring homework directory...\n\n"
 	cc ${srcdir}/grading.c -DCONFIGURE -o ${srcdir}/out
 	${srcdir}/out "${hwdir}/"
 }
 
-run_configure_quiet() {
-	cc ${srcdir}/grading.c -DCONFIGURE -o ${srcdir}/out
-	${srcdir}/out "${hwdir}/"
-}
-
-run_save() {
+run_save_verbose() {
 	echo -e "\nMode \"SAVE\": saving current progress...\n"
 	cc ${srcdir}/grading.c -DSAVE -DVERBOSE -o ${srcdir}/out
 	${srcdir}/out "${hwdir}/"
 }
 
-run_save_quiet() {
+run_save() {
 	cc ${srcdir}/grading.c -DSAVE -o ${srcdir}/out
 	${srcdir}/out "${hwdir}/"
+	echo ""
 }
 
-
-###############################################################################
-# options parsing #
-###############################################################################
-
-if [[ "$#" == 0 || "$#" > 2 ]] ; then 
-	usage_message
-	exit 1
-fi
-
-
-if [ "$#" == 2 ] ; then
-	hwdir="$(realpath $2)"
-	while getopts "cspu" opt; do
-		case ${opt} in
-			c)
-				run_configure
-				;;
-			s)
-				run_save
-				;;
-			p)
-				convert_md_to_pdf
-				;; 
-			u)
-				make_upload_dir $2
-				;;
-			\?)
-				echo -e "\nYou twat."
-				;;
-		esac
-	done
-	exit 1
-fi
-
-
-###############################################################################
-# interface #
-###############################################################################
-
-hwdir="$(realpath $1)"
-progressfile="${hwdir}/progress.csv"
-
-studentdir=()
-i=0
-for dir in $hwdir/*/ ; do
-	#echo $dir
-	studentdir[$i]=$dir
-	i=`expr $i + 1`
-done
-numstudents=$i
-
-welcome_message
-
-run_checks() {
+check_if_configured() {
 	if ! [ -f "$progressfile" ]; then
-		echo -e "\nDirectory not configured yet."
-		echo -e "Configuring directory...\n"
-		run_configure_quiet
+		echo -e "Grading directory not configured yet."
+		echo -e "Please configure directory by running grade <dir> -c\n"
+		exit 1
 	fi
 }
 
-show_selection() {
-	run_checks
+comments_scroll() {
 	printf "Current progress:\n\n"
 	printf "   %s     %s         %s\n" "#" "Grade" "Student"
 	echo ""
+
 	declare -i row=0
 	numgraded=0
 	while IFS=$',\n' read -r -a array; do
@@ -186,7 +125,6 @@ show_selection() {
 		echo ""
 	done < $progressfile
 	printf "\n  %s/%s graded.\n\n" "${numgraded}" "${numstudents}" 
-
 	read -p ":: Select student to grade: [enter #] " selection
 
 	realnumbers='^[0-9]+$'
@@ -197,9 +135,150 @@ show_selection() {
 
 	selection=`expr $selection - 1`
 	vim "${studentdir[${selection}]}Feedback Attachment(s)/comments.txt" 
-	run_save_quiet
+
+	clear
+	run_save
+	sleep 0.5
 }
 
-for i in {1..512} ; do
-	show_selection
+run_grade() {
+	check_if_configured
+	echo ""
+	welcome_message
+	while true ; do
+		comments_scroll
+	done
+}
+
+submissions_scroll() {
+	printf "\nCurrent progress:\n\n"
+	printf "   %s     %s         %s\n" "#" "Grade" "Student"
+	echo ""
+
+	declare -i row=0
+	numgraded=0
+	while IFS=$',\n' read -r -a array; do
+		if [[ ${array[4]} == *"-" || ${array[4]} == *" " ]] ; then
+			printf "  ${yellow}[%s]    %s 	%s${white}"\
+				"${array[0]}" "${array[4]}" "${array[1]}"
+		else
+			printf "  [%s]    %s 	%s"\
+				"${array[0]}" "${array[4]}" "${array[1]}"
+			numgraded=`expr $numgraded + 1`
+		fi
+		echo ""
+	done < $progressfile
+	printf "\n  %s/%s graded.\n\n" "${numgraded}" "${numstudents}" 
+	read -p ":: Select student submission(s) to view: [enter #] " selection
+
+	realnumbers='^[0-9]+$'
+	if ! [[ $selection =~ $realnumbers ]] ; then
+		echo -e "\nInvalid input. Exiting."
+		exit 1
+	fi
+
+	selection=`expr $selection - 1`
+
+	files=($(ls "${studentdir[${selection}]}Submission attachment(s)/"))
+	numfiles=${#files[@]}
+
+	if [ $numfiles == 0 ] ; then
+		clear
+		printf "\nWhoops! No submission attachments in"
+		printf "\".${studentdir[${selection}]//$hwdir/}\"\n"
+		sleep 1
+	else
+		clear
+		echo -e "\n\".${studentdir[${selection}]//$hwdir/}\" submission attachments:\n"
+		for i in $(seq 0 $numfiles) ; do
+			echo "   ${files[i]}"
+		done
+		sleep 1
+
+		for i in $(seq 0 $numfiles) ; do
+			if [[ ${files[i]} == *".pdf"* ]]; then
+				$pdfviewer\
+				"${studentdir[${selection}]}Submission attachment(s)/${files[i]}"
+			elif [[ ${files[i]} == *".docx"* ]]; then
+				$docxviewer\
+				"${studentdir[${selection}]}Submission attachment(s)/${files[i]}"
+			else
+				echo ""
+			fi
+		done
+		clear
+	fi
+}
+
+run_viewer() {
+	while true ; do
+		submissions_scroll
+	done
+}
+
+show_stats() {
+	clear
+	echo -e "Summary statistics: ${1}\n"
+	julia "${srcdir}/stats/summarystats.jl" "${hwdir}/grades-tmp.csv" "${PWD}"
+	echo ""
+}
+
+## options parsing ##
+
+if [[ "$#" != 2 ]] ; then 
+	usage_message
+	exit 1
+fi
+
+if [ ! -d "$1" ] ; then
+	echo -e "\nOops! Directory \"${1}\" doesn't exist."
+	echo -e "Exiting.\n"
+fi
+
+hwdir="$(realpath $1)"
+updir="$(realpath $1)/uploads"
+srcdir="${HOME}/bin/grading"
+progressfile="${hwdir}/progress.csv"
+
+studentdir=()
+i=0
+for dir in $hwdir/*/ ; do
+	studentdir[$i]=$dir
+	i=`expr $i + 1`
 done
+numstudents=$i
+
+if [ "$#" == 2 ] ; then
+	option=$2
+	case $option in
+		-c|--configure)
+			run_configure
+			;;
+		-g|--grade)
+			check_if_configured
+			run_grade
+			;;
+		-v|--view)
+			run_viewer
+			;;
+		-s|--save)
+			check_if_configured
+			run_save_verbose
+			;;
+		-p|--pdf)
+			check_if_configured
+			convert_md_to_pdf
+			;;
+		-t|--stats)
+			check_if_configured
+			show_stats $1
+			;;
+		-u|--upload)
+			check_if_configured
+			make_upload_dir $1
+			;;
+		*)
+			usage_message
+			;;
+	esac
+fi

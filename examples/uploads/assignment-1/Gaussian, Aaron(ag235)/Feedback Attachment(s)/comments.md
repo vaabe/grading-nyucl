@@ -1,9 +1,0 @@
-## COMMENTS
-
-- I mean, what do you think you're doing?
-
-## GRADE
-
-----        ----
-total          10
-----        ----

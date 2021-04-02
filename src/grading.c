@@ -116,6 +116,8 @@ void grading_load(char hwDirPath[])
 
 void configure_hw_directory() 
 {
+	printf("\nConfiguring grading directory...\n\n"); 
+
 	FILE *progressFile; 
 	int progressIndicator; 
 	if (progressFile = fopen(join_paths(hwDirPath, "progress.csv"), "r")) {
@@ -181,7 +183,7 @@ void configure_hw_directory()
 		printf("Done.\n"); 
 		printf(
 			"\nThe bollards are down! "
-			"Ready to start grading.\n"
+			"Ready to start grading.\n\n"
 			); 
 	}
 
@@ -198,6 +200,7 @@ void configure_hw_directory()
 
 void save_progress()
 {
+	printf("\nSaving progress..."); 
 #ifdef VERBOSE
 	printf("\nReading the \"comments.txt\" file for each student... "); 
 #endif
@@ -465,7 +468,9 @@ void write_txt_to_md()
 		}
 	}
 
+#ifdef VERBOSE
 	printf("Done.\n\n"); 
+#endif
 }
 
 int main(int argc, char *argv[])
