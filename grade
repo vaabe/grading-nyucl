@@ -21,7 +21,7 @@ options=(\
 )
 
 usage_message() {
-	echo -e "\nusage: grade <homework dir> [option]\n"
+	echo -e "\nusage: grade <grading dir> <option>\n"
 	echo "options:"
 	for i in "${options[@]}"; do
 		echo "    $i"
@@ -31,7 +31,7 @@ usage_message() {
 }
 
 pithy_usage_message() {
-	echo -e "usage: grade <homework dir> [option]\n"
+	echo -e "usage: grade <grading dir> <option>\n"
 }
 
 welcome_message() {
@@ -47,6 +47,7 @@ table_header() {
 }
 
 convert_md_to_pdf() {
+	clear
 	echo -e "\nCreating comments.pdf file for each student...\n"
 	for dir in $hwdir/*/ ; do
 		cd "${dir}/Feedback Attachment(s)"
@@ -68,6 +69,7 @@ make_upload_dir() {
 	fi
 
 	updir="${PWD}/uploads/$1"
+	rm -rf $updir
 	cp -r $hwdir $updir
 
 	for dir in $updir/*/ ; do
@@ -76,6 +78,7 @@ make_upload_dir() {
 
 	rm -f "${updir}/grades.csv"
 	rm -f "${updir}/progress.csv"
+	rm -f "${updir}/commentsbuffer.txt"
 	mv "${updir}/grades-tmp.csv" "${updir}/grades.csv"
 	echo -e "Upload directory created: ${updir}"
 	echo ""
@@ -87,7 +90,7 @@ run_configure() {
 }
 
 run_save_verbose() {
-	echo -e "\nMode \"SAVE\": saving current progress...\n"
+	clear
 	cc ${srcdir}/grading.c -DSAVE -DVERBOSE -o ${srcdir}/out
 	${srcdir}/out "${hwdir}/"
 }
@@ -134,7 +137,8 @@ comments_scroll() {
 	fi
 
 	selection=`expr $selection - 1`
-	vim "${studentdir[${selection}]}Feedback Attachment(s)/comments.txt" 
+	vim -p2 "${studentdir[${selection}]}Feedback Attachment(s)/comments.txt"\
+	       "${hwdir}/commentsbuffer.txt"	
 
 	clear
 	run_save
@@ -142,6 +146,7 @@ comments_scroll() {
 }
 
 run_grade() {
+	clear
 	check_if_configured
 	echo ""
 	welcome_message
@@ -211,6 +216,7 @@ submissions_scroll() {
 }
 
 run_viewer() {
+	clear
 	while true ; do
 		submissions_scroll
 	done
