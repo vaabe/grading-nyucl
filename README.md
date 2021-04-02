@@ -1,17 +1,20 @@
 # grading
 
-A (slightly absurd) terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). It's mostly written in C and Bash, and works (well?) on Linux with the i3 window manager.  
+A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
 
 ![](./media/interface.png)
 
 ```
 ./init to add scripts to $PATH. 
 
-Usage: grade [options] <dir>
+Usage: grade <dir> <option>
 
 options:
-	-i		initialize (make comments.txt file for each student) 
-	-g		parse comments for each student and save grades
-	-p		made pdfs (convert markdown files to pdf)
-	-u		create upload directory (required format for uploading)	
+	-c|--configure 	set up directory
+	-g|--grade		comments selector
+	-v|--view		submissions selector
+	-s|--save		parse comments and save progress
+	-p|--pdf		convert markdown comments to pdf
+	-t|--stats		show statistics
+	-u|--upload		create upload directory
 ```
