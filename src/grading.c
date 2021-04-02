@@ -94,7 +94,7 @@ void grading_load(char hwDirPath[])
 		student[i].firstname = remove_quotes(student[i].gradestring[3]); 
 		student[i].grade = remove_quotes(student[i].gradestring[4]); 
 		student[i].subdate = remove_quotes(student[i].gradestring[5]); 
-		// student[i].late = student[i].gradestring[6]; 
+		student[i].late = student[i].gradestring[6]; 
 		student[i].late = "On time"; 
 
 		snprintf(
@@ -111,6 +111,7 @@ void grading_load(char hwDirPath[])
 	}
 
 	fclose(gradesFile); 
+
 	// printf("%s\n", student[0].late); 
 }
 
@@ -179,12 +180,19 @@ void configure_hw_directory()
 		}
 
 		fclose(progressFile); 
-
 		printf("Done.\n"); 
+
+		printf("Creating commentsbuffer.txt file... "); 
+		FILE *commentsBuffer = fopen(
+			join_paths(hwDirPath, "commentsbuffer.txt"), "w"); 
+		fclose(commentsBuffer); 
+		printf("Done\n"); 
+
 		printf(
 			"\nThe bollards are down! "
 			"Ready to start grading.\n\n"
 			); 
+
 	}
 
 	else {
@@ -204,6 +212,9 @@ void save_progress()
 #ifdef VERBOSE
 	printf("\nReading the \"comments.txt\" file for each student... "); 
 #endif
+
+	FILE *commentsBuffer = fopen(
+		join_paths(hwDirPath, "commentsbuffer.txt"), "w"); 
 
 	for (int i = 0; i < numStudents; i++) {
 		char feedbackPath[MAXCHARS]; 
@@ -289,6 +300,10 @@ void save_progress()
 			fgets(buffer, sizeof(buffer), feedbackFile); 
 			if (linetype[j] == comment) {
 				strcpy(student[i].feedback.comment[cind], buffer); 
+
+				// save comment in comments buffer
+				fprintf(commentsBuffer, "%s\n", buffer); 
+
 				cind++; 
 			}
 			if (linetype[j] == grade) {
@@ -328,6 +343,8 @@ void save_progress()
 		strcpy(student[i].feedback.grade[totalind], 
 				join_paths(student[i].feedback.grade[totalind], gradetmp2)); 
 	}
+
+	fclose(commentsBuffer); 
 
 #ifdef VERBOSE
 	printf("Done.\n"); 
