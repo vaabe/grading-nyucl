@@ -10,7 +10,7 @@ A terminal grading workflow for NYU Classes. I made this to help speed up gradin
 Usage: grade <dir> <option>
 
 options:
-	-c|--configure 	set up directory
+	-c|--configure		set up directory
 	-g|--grade		comments selector
 	-v|--view		submissions selector
 	-s|--save		parse comments and save progress
