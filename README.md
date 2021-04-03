@@ -29,7 +29,9 @@ options:
 	-u|--upload		create upload directory
 ```
 
-- `-c` to configure/initialize the directory for grading. This creates a `comments.txt` file in each student directory, and it also creates a `progress.csv` file in the main directory to log current grading progress and prevent accidental overwrites. 
+- `-c` to configure/initialize the directory for grading. 
+	+ creates a `comments.txt` file in each student directory.
+	+ creates a `progress.csv` file in the main directory, to log current grading progress and prevent accidental overwrites. 
 - `-g` to enter the grading comments selector. A list of students will be printed, with ungraded ones highlighted in yellow. 
 
 # How to use
