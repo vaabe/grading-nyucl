@@ -21,8 +21,8 @@ Usage: grade <dir> <option>
 
 options:
 	-c|--configure		configure directory for grading
-	-g|--grade		enter grading comments selector
-	-v|--view		enter student submissions selector
+	-g|--grade		grading comments selector
+	-v|--view		student submissions selector
 	-s|--save		save progress
 	-p|--pdf		generate pdf comments files for each student
 	-t|--stats		show summary statistics
