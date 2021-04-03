@@ -6,7 +6,7 @@ A terminal grading workflow for NYU Classes. I made this to help speed up gradin
 
 <br>
 
-## Usage
+# Usage Flags
 
 ```
 Usage: grade <dir> <option>
@@ -20,6 +20,8 @@ options:
 	-t|--stats		show statistics
 	-u|--upload		create upload directory
 ```
+
+# How to use 
 
 - Download the assignment zip file from NYU Classes. Tick the boxes for "Student submission attachments", "Feedback attachments", and "grades.csv file". 
 - Unzip the directory, move to the desired location, etc. 
