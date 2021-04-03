@@ -33,7 +33,7 @@ options:
 	+ creates a `comments.txt` file in each student directory.
 	+ creates a `progress.csv` file in the main directory, to log current grading progress and prevent accidental overwrites. 
 	+ creates a `commentsbuffer.txt` file in the main directory, which logs all comments (for the students graded so far), for easy access when grading other assignments. 
-- `-g` to enter the grading comments selector. A list of students will be printed, with ungraded ones highlighted in yellow ([fig 1](https://github.com/vaabe/grading/blob/main/media/student-selector.png)). Enter the student's number to open their comments.txt file for grading. 
+- `-g` to enter the grading comments selector. A list of students will be printed, with ungraded ones highlighted in yellow ([Fig. 1](https://github.com/vaabe/grading/blob/main/media/student-selector.png)). Enter the student's number to open their comments.txt file for grading. 
 
 # How to use
 
