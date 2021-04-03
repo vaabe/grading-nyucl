@@ -147,9 +147,8 @@ void configure_hw_directory()
 
 			fprintf(
 				commentsFile,
-				"%s%s%s%s%s%s%s%s", 
-				"## COMMENTS\n\n", 
-				"insert comments\n\n",
+				"%s%s%s%s%s%s%s", 
+				"## COMMENTS\n\n\n", 
 				"## GRADE\n\n",
 				"theory, -\n", 
 				"analysis, -\n", 
