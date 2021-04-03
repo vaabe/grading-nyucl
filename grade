@@ -149,7 +149,6 @@ comments_scroll() {
 run_grade() {
 	clear
 	check_if_configured
-	echo ""
 	welcome_message
 	while true ; do
 		comments_scroll
