@@ -1,4 +1,4 @@
-A "terminal" grading workflow for NYU Classes. Provides a simple interface to select any student and view their submission attachments, autogenerate formatted comments files, and view summary statistics for the whole class. I made this to help speed up grading long-form assignments (reports, essays, etc), and to avoid having to deal with the (convoluted) export format used by Classes.  
+A "terminal" grading workflow for NYU Classes. Provides a simple interface to select students and view their submission attachments, generate formatted comments files, and view summary statistics for the whole class. I made this to help speed up grading long-form assignments (reports, essays, etc), and to avoid having to deal with the (convoluted) export format used by Classes.  
 
 <p float="left">
 <br>
