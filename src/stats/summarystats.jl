@@ -47,6 +47,7 @@ plot = histogram(completegrades,
 				 nbins = numbins,
 				 closed = :right,
 				 border = :dotted,
+				 color = :yellow
 				 )
 
 println(plot)
