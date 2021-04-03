@@ -2,7 +2,7 @@
 
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
 
-![](./media/interface.png)
+![](./media/full-view.png)
 
 `./init` to add scripts to `$PATH`. 
 
