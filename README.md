@@ -24,7 +24,7 @@ options:
 	-g|--grade		grading comments selector
 	-v|--view		student submissions selector
 	-s|--save		save progress
-	-p|--pdf		generate pdf comments files for each student
+	-p|--pdf		generate a pdf comments file for each student
 	-t|--stats		show summary statistics
 	-u|--upload		create upload directory
 ```
@@ -35,8 +35,10 @@ options:
 	+ creates a `commentsbuffer.txt` file in the main directory, which logs all comments (for the students graded so far), for easy access when grading other assignments. 
 - `-g` to open the grading comments selector. A list of students will be printed, with ungraded ones highlighted in yellow ([Figure 1](https://github.com/vaabe/grading/blob/main/media/student-selector.png)). Enter the student's number to open their comments.txt file for grading. Both the comments file and the commentsbuffer file are opened in Vim ([Figure 2](https://github.com/vaabe/grading/blob/main/media/comments-txt.png)). 
 - `-v` to open the student submissions selector. A list of students will be printed, with ungraded ones highlighted in yellow. Enter the student's number to open their submission attachment(s). Pdf files are opened with zathura, and docx files are opened with LibreOffice. 
-- `-s` to save current grading progress. This runs a script that parses the comments files for all students, saves their comments in the comments buffer, and save their grades in the grades file. 
+- `-s` to save current grading progress. This runs a script that parses the comments.txt files for all students, saves their comments in the comments buffer, saves their grades in the grades file, and writes the information to a markdown file (comments.md). 
 	+ N.B. the grades are saved in a "tmp" file, `grades-tmp.csv`, not the original grades.csv file. This is so a copy of the original grades file format is preserved (in case anything weird happens). I've noticed that NYU Classes is rather fussy about the format of the grades file that gets uploaded (in particular the variable names and the metadata at the top of the grades file). If anything differs from the original download format, the grades don't get uploaded correctly. 
+	+ the `-s` option also rewrites all the comments.txt files 
+- `-p` to generate a pdf comments file for each student. Uses Pandoc to parse the comments.md files for each student, and generates a comments.pdf file ([Figure 3](https://github.com/vaabe/grading/blob/main/media/comments-pdf.png)). 
 
 # How to use
 
