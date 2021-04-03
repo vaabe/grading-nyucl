@@ -1,4 +1,4 @@
-A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. reports, essays, etc), and especially to avoid having to deal with the convoluted export format used by Classes.  
+A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. reports, essays, etc), and especially to avoid having to deal with the (convoluted) export format used by Classes.  
 
 <figure>
 <img src="./media/student-selector-narrow.png" width="55%" />
