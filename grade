@@ -85,6 +85,9 @@ make_upload_dir() {
 }
 
 run_configure() {
+	for dir in $hwdir/*/ ; do
+		mkdir -p "${dir}Feedback Attachment(s)"
+	done
 	cc ${srcdir}/grading.c -DCONFIGURE -o ${srcdir}/out
 	${srcdir}/out "${hwdir}/"
 }
@@ -98,7 +101,6 @@ run_save_verbose() {
 run_save() {
 	cc ${srcdir}/grading.c -DSAVE -o ${srcdir}/out
 	${srcdir}/out "${hwdir}/"
-	echo ""
 }
 
 check_if_configured() {
