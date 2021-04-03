@@ -2,12 +2,12 @@ A terminal grading workflow for NYU Classes. I made this to help speed up gradin
 
 <p float="left">
 <br>
-<img src="./media/student-selector.png" width="49%" />
+<img src="./media/student-selector.png" width="49%" />&nbsp;
 <img src="./media/comments-txt.png" width="49%" />
 </p>
 
 <p float="left">
-<img src="./media/comments-pdf.png" width="49%" />
+<img src="./media/comments-pdf.png" width="49%" />&nbsp; 
 <img src="./media/stats.png" width="49%" />
 <br>
 </p>
