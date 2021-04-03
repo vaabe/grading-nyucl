@@ -11,12 +11,12 @@ white=$(tput sgr0)
 ## functions and def ##
 
 options=(\
-	"-c|--configure 	set up directory"\
-	"-g|--grade 		comments selector"\	
-	"-v|--view		submissions selector"\
-	"-s|--save 		parse comments and save grades"\
-	"-p|--pdf 		convert markdown comments to pdf"\
-	"-t|--stats		show statistics"\
+	"-c|--configure 	configure directory for grading"\
+	"-g|--grade 		grading comments selector"\	
+	"-v|--view		student submissions selector"\
+	"-s|--save 		save progress"\
+	"-p|--pdf 		generate a pdf comments file for each student"\
+	"-t|--stats		show summary statistics"\
 	"-u|--upload		create upload directory"\
 )
 
