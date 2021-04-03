@@ -1,0 +1,847 @@
+
+\documentclass[9pt]{extarticle}
+\usepackage[margin=0.7cm]{geometry}
+\usepackage[UKenglish]{babel}
+\usepackage{parallel,enumitem}
+\usepackage{multicol}
+\setlength{\columnsep}{0.7cm}
+\setlength{\columnseprule}{0.5pt}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\graphicspath{{./pics/}}
+\usepackage{physics}
+
+%% vectors and matrices
+\renewcommand{\v}[1]{{\bm #1}}
+\renewcommand{\dv}[1]{\dot{\bm{#1}}}
+\newcommand{\ddv}[1]{\ddot{\bm{#1}}}
+\newcommand{\hv}[1]{\hat{\bm{#1}}}
+\newcommand{\m}[1]{[ #1 ]}
+\renewcommand{\t}[1]{\widetilde{\bm{#1}}}
+\newcommand{\bfit}[1]{\textbf{\textit{#1}}}
+
+%% differential and integral operators
+\renewcommand{\d}{\text{d}}
+\renewcommand{\dd}[2]{\frac{\d #1}{\d #2}}
+\newcommand{\ddd}[2]{\frac{\d^2 #1}{\d #2^2}}
+\newcommand{\ddt}[1]{\frac{\d #1}{\d t}}
+\newcommand{\dddt}[1]{\frac{\d^2 #1}{\d t^2}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\renewcommand{\grad}{\boldsymbol \nabla} 
+\renewcommand{\div}{\boldsymbol \nabla \cdot}
+\renewcommand{\curl}{\boldsymbol \nabla \times}
+\newcommand{\lap}{\nabla^2}
+
+%% constants
+\newcommand{\eo}{\epsilon_0}
+
+\begin{document}
+
+\setlength{\parindent}{0pt}
+
+{\huge \bf problem set} 
+
+\noindent \hrulefill
+
+\begin{multicols*}{2}
+
+{\bf \LARGE I.i -- Commutators (a)} \\
+
+{\it Townsend 3.1} \\ 
+Verify for the operators $\hat A$, $\hat B$, and $\hat C$ that
+
+$$(\text a) \hspace{0.5cm} [\hat A, \hat B + \hat C] = [\hat A, \hat B] + [\hat A, \hat C]$$
+
+$$(\text b) \hspace{0.5cm} [\hat A, \hat B \hat C] = \hat B[\hat A, \hat C] + [\hat A, \hat B] \hat C$$ \ 
+
+Similarly, you can show that
+
+$$(\text c) \hspace{0.5cm} [\hat A \hat B, \hat C] = \hat A[\hat B, \hat C] + [\hat A, \hat C] \hat B$$ \ 
+
+{\bfit{Solution}} \\ 
+The commutator of two operators $\hat A$ and $\hat B$ is defined by the relationship:
+
+$$[\hat A, \hat B] \equiv \hat A \hat B - \hat B \hat A$$ \ 
+
+Following this form, the commutator of the two operators $\hat A$ and $(\hat B + \hat C)$ can be expanded as follows:
+
+$$
+\begin{aligned}[]
+	[ \hat A, \hat B + \hat C] &= \hat A (\hat B + \hat C) - (\hat B + \hat C) \hat A \\ 
+	&= \hat A \hat B - \hat B \hat A + \hat A \hat C - \hat C \hat A \\ 
+	&= [\hat A, \hat B] + [\hat A, \hat C]
+\end{aligned}
+$$ \ 
+
+For the two operators $\hat A$ and $\hat B \hat C$, the commutator $[\hat A, \hat B \hat C]$ can be expressed as:
+
+$$
+\begin{aligned}[]
+	[\hat A , \hat B \hat C] &= \hat A \hat B \hat C - \hat B \hat C \hat A \\
+	&= \hat A \hat B \hat C - \hat B \hat A \hat C + \hat B \hat A \hat C - \hat B \hat C \hat A \\
+	&= [\hat A, \hat B] \hat C + \hat B [\hat A, \hat C] 
+\end{aligned}	
+$$ \ 
+
+where in the second step I added the terms $\pm \hat B \hat A \hat C$, and in the final step I factored out like terms. \\ 
+
+Similarly, for the two operators $\hat A \hat B$ and $\hat C$:
+
+$$
+\begin{aligned}[]
+	[\hat A \hat B, \hat C] &= \hat A \hat B \hat C - \hat C \hat A \hat B \\ 
+	&= \hat A \hat B \hat C - \hat A \hat C \hat B + \hat A \hat C \hat B - \hat C \hat A \hat B \\ 
+	&= \hat A [\hat B, \hat C] + [\hat A, \hat C] \hat B
+\end{aligned}	
+$$ \ 
+
+
+
+
+
+\hrulefill 
+
+\hfill
+
+{\bf \LARGE I.ii -- Commutators (b)} \\ 
+
+{\it Townsend 3.8} \\
+Show that the operator $\hat C$ defined through $[\hat A, \hat B] = i \hat C$ is Hermitian, provided the operators $\hat A$ and $\hat B$ are Hermitian. \\ 
+
+{\bfit{Solution}} \\
+An operator $\hat O$ is said to be Hermitian if it satisfies the following property:
+
+$$\hat O^\dagger = \hat O$$ \ 
+
+i.e. if the matrix representing the operator is equal to its conjugate transpose. \\ 
+
+In this example, the conjugate transpose of the commutator $[\hat A, \hat B]$ is:
+
+$$
+\begin{aligned}[]
+	[\hat A, \hat B]^\dagger &= (\hat A \hat B - \hat B \hat A)^\dagger \\ 
+	&= (\hat A \hat B)^\dagger - (\hat B \hat A)^\dagger \\ 
+	&= \hat B^\dagger \hat A^\dagger - \hat A^\dagger \hat B^\dagger = (i\hat C)^\dagger
+\end{aligned}
+$$ \ 
+
+where in the final step I used the general result $(\hat A \hat B)^\dagger = \hat B^\dagger \hat A^\dagger$. Since $\hat A$ and $\hat B$ are both Hermitian, it follows that $\hat B^\dagger \hat A^\dagger - \hat A^\dagger \hat B^\dagger = \hat B \hat A - \hat A \hat B$ and thus: 
+
+$$[\hat A, \hat B]^\dagger = -[\hat A, \hat B] = -i \hat C$$ \
+
+But since $[\hat A, \hat B]^\dagger = (i\hat C)^\dagger$, this means that:
+
+$$
+\begin{aligned}
+	(i\hat C)^\dagger &= -i \hat C \\ 
+	\Longrightarrow \; -i \hat C^\dagger &= -i \hat C \\ 	
+\end{aligned}	
+$$
+
+Thus:
+
+$$\hat C^\dagger = \hat C$$ \ 
+
+Thus for an operator $\hat C$ defined through $[\hat A, \hat B] = i \hat C$, if $\hat A$ and $\hat B$ are Hermitian, $\hat C$ must also be Hermitian. \\ 
+
+
+
+
+
+\hrulefill 
+
+\hfill 
+
+{\bf \LARGE II -- Schwarz Inequality} \\ 
+
+{\it Townsend 3.7} \\
+Derive the Schwarz inequality
+
+$$\bra{\alpha}\ket{\alpha} \bra{\beta}\ket{\beta} \geq | \bra{\alpha}\ket{\beta} |^2$$ \ 
+
+and determine the value of $\lambda$ that minimises the left-hand side of the equation. \\ 
+
+{\bfit{Solution}} \\ 
+Given the relation:
+
+$$\big( \bra{\alpha} + \lambda^* \bra{\beta} \big) \big(  \ket{\alpha} + \lambda \ket{\beta} \big) \geq 0$$ \ 
+
+Choosing $\lambda$ and $\lambda^*$ as:
+
+$$\lambda = \frac{\bra{\alpha}\ket{\beta}}{\bra{\beta}\ket{\beta}} \hspace{1cm} \lambda^* = -\frac{\bra{\alpha}\ket{\beta}}{\bra{\beta}\ket{\beta}}$$ \ 
+
+Substituting:
+
+$$
+\begin{aligned}
+	\big( \bra{\alpha} + \lambda^* \bra{\beta} \big) \big(  \ket{\alpha} + \lambda \ket{\beta} \big) &= \Bigg[ \bra{\alpha} \frac{-\bra{\alpha}\ket{\beta}}{\bra{\beta}\ket{\beta}} \bra{\beta} \Bigg] \Bigg[ \ket{\alpha} \frac{\bra{\alpha}\ket{\beta}}{\bra{\beta}\ket{\beta}} \ket{\beta} \Bigg] \\ 
+	&= \bra{\alpha}\ket{\alpha} \frac{-\bra{\alpha}\ket{\beta}^2}{\bra{\beta}\ket{\beta}^2} \bra{\beta}\ket{\beta} \\ 
+	&= \bra{\alpha}\ket{\alpha} \frac{-\bra{\alpha}\ket{\beta}^2}{\bra{\beta}\ket{\beta}} \geq 0
+\end{aligned}
+$$ \ 
+
+$$\therefore \;\; \bra{\alpha}\ket{\alpha} \bra{\beta}\ket{\beta} \geq \bra{\alpha}\ket{\beta}^2$$ \ 
+
+
+
+
+
+\hrulefill 
+
+\newpage
+
+
+{\bf \LARGE III.i -- Spin $\frac 32$ (a)} \\ 
+
+{\it Townsend 3.22} \\ 
+Arsenic atoms in the ground state are spin-$\frac 32$ particles. A beam of arsenic atoms enters an $SGx$ device, a Stern-Gerlach device with its inhomogeneous magnetic field oriented in the $x$ direction. Atoms with $S_x = \frac 12 \hbar$ then enter an $SGz$ device. Determine the fraction of the atoms that exit the $SGz$ device with $S_z = \frac 32 \hbar$, $S_z = \frac 12 \hbar$, $S_z = -\frac 12 \hbar$, $S_z = -\frac 32 \hbar$. \\ 
+
+{\bfit{Solution}} \\ 
+Our goal here is to compute the probability amplitude of finding a particle with $S_x = \frac 12 \hbar$ in one of the $S_z$ states. To do this we can use the representation of $\hat S_x$ in the $S_z$ basis:
+
+$$
+\hat S_x \longrightarrow \frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0
+\end{bmatrix}
+$$ \
+
+The eigenvalue equation:
+
+$$\hat S_x \ket{\frac 32, \mu}_x = \mu \hbar \ket{\frac 32, \mu}_x$$ \ 
+
+where $\mu$ represents one of the spin states, has the following matrix representation:
+
+$$
+\frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0
+\end{bmatrix}
+\begin{bmatrix}
+	a \\ b \\ c \\ d
+\end{bmatrix}
+= \mu \hbar 
+\begin{bmatrix}
+        a \\ b \\ c \\ d
+\end{bmatrix}
+$$ \ 
+
+which can be rearranged as follows:
+
+$$
+\begin{bmatrix}
+        -\mu & \sqrt 3 /2& 0 & 0 \\
+        \sqrt 3 /2& -\mu & 1 & 0 \\
+        0 & 1 &-\mu & \sqrt 3 /2\\
+        0 & 0 & \sqrt 3 /2& -\mu
+\end{bmatrix}
+\begin{bmatrix}
+        a \\ b \\ c \\ d
+\end{bmatrix}
+=0
+$$ \ 
+
+Setting $\mu = \frac 12$ (since in this case atoms entering the $SGz$ device are in the state $S_x = \frac 12 \hbar$, we get the following eigenvector in the $S_z$ basis representing the eigenstate of $\hat S_x$ with eigenvalue $\frac 12$:
+
+$$\ket{\frac 32, \frac 12}_x \xrightarrow[S_z]{} 
+\begin{bmatrix}
+	-1 \\ 
+	-\frac{1}{\sqrt 3} \\ 
+	\frac{1}{\sqrt 3} \\ 
+	1
+\end{bmatrix}
+$$ \ 
+
+Requiring that the state be normalised:
+
+$$
+\ket{\frac 32, \frac 12}_x \xrightarrow[S_z]{} \sqrt{\frac 38}
+\begin{bmatrix}
+        -1 \\
+        -\frac{1}{\sqrt 3} \\
+        \frac{1}{\sqrt 3} \\
+        1
+\end{bmatrix}
+$$ \ 
+
+Expressing this in terms of kets:
+
+$$\ket{\frac 32, \frac 12}_x = -\sqrt{\frac 38} \ket{\frac 32, \frac 32} - \frac{1}{2\sqrt 2} \ket{\frac 32, \frac 12} + \frac{1}{2\sqrt 2} \ket{\frac 32, -\frac 12} + \sqrt{\frac 38} \ket{\frac 32, -\frac 32}$$ \ 
+
+The probability of particles leaving the $SGz$ with $S_z = \frac 32 \hbar$ is:
+
+$$\Bigg| \bra{\frac 32, \frac 32}\ket{\frac 32, \frac 12} \Bigg|^2 = \Bigg| -\sqrt{\frac 38} \Bigg|^2 = \frac 38$$ \ 
+
+Similarly the probability of particles leaving with $S_z = \frac 12 \hbar$ is:
+
+$$\Bigg| \bra{\frac 32, \frac 12}\ket{\frac 32, \frac 12} \Bigg|^2 = \Bigg| - \frac{1}{2\sqrt 2} \Bigg|^2 = \frac 18$$ \ 
+
+The probaility of particles leaving with $S_z = -\frac 12 \hbar$ is:
+
+$$\Bigg| \bra{\frac 32, -\frac 12}\ket{\frac 32, \frac 12} \Bigg|^2 = \Bigg|\frac{1}{2\sqrt 2} \Bigg|^2 = \frac 18$$ \ 
+
+The probability of particles leaving with $S_z = -\frac 32 \hbar$ is:
+
+$$\Bigg| \bra{\frac 32, -\frac 32}\ket{\frac 32, \frac 12} \Bigg|^2 = \Bigg|\sqrt{\frac 38} \Bigg|^2 = \frac 38$$ \ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+\hrulefill 
+
+\hfill 
+
+{\bf \LARGE III.ii -- Spin $\frac 32$ (b)} \\ 
+
+{\it Townsend 3.23 (modified)} \\ 
+For a spin-$\frac 32$ particle the matrix representation of the operator $\hat S_x$ in the $S_z$ basis is given by
+
+$$
+\hat S_x \longrightarrow \frac \hbar 2 
+\begin{bmatrix}
+	0 & \sqrt 3 & 0 & 0 \\ 
+	\sqrt 3 & 0 & 2 & 0 \\ 
+	0 & 2 & 0 & \sqrt 3 \\ 
+	0 & 0 & \sqrt 3 & 0
+\end{bmatrix}
+$$ \ 
+
+Check that all four of the following states are eigenvectors with the correct eigenvalues. Check the states are orthonormal. 
+
+$$
+\ket{\frac 32 , \frac 32}_x \longrightarrow \frac{1}{2\sqrt 2} 
+\begin{bmatrix}
+	1 \\ 
+	\sqrt 3 \\ 
+	\sqrt 3 \\ 
+	1
+\end{bmatrix}
+\hspace{1cm}
+\ket{\frac 32 , \frac 12}_x \longrightarrow \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+	\sqrt 3 \\ 
+	1 \\ 
+	-1 \\ 
+	-\sqrt 3
+\end{bmatrix}
+$$
+
+$$
+\ket{\frac 32 , -\frac 12}_x \longrightarrow \frac{1}{2\sqrt 2} 
+\begin{bmatrix}
+        \sqrt 3 \\ 
+        -1 \\
+        -1 \\
+        \sqrt 3
+\end{bmatrix}
+\hspace{1cm}
+\ket{\frac 32 , -\frac 32}_x \longrightarrow \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 \\ 
+        -\sqrt 3 \\ 
+        \sqrt 3 \\ 
+        -1
+\end{bmatrix}
+$$ \ 
+
+{\bfit{Solution}} \\ 
+The eigenstates and eigenvalues of $\hat S_x$ are given by the eigenvalue equation:
+
+$$\hat S_x \ket{s,m} = m \hbar \ket{s,m}$$ \ 
+
+where $\ket{s,m}$ represents a spin state of a spin-$s$ particle. For a spin $\frac 32$ particle, there are four possible $m$ values: $\frac 32$, $\frac 12$, $-\frac 12$, and $-\frac 32$, which correspond to the four possible spin states. From the equation above, the eigenvalues for these spin states are: $\frac 32 \hbar$, $\frac 12 \hbar$, $-\frac 12 \hbar$, $-\frac 32 \hbar$. The proposed eigenvectors in the question can be verified by substituting them into the eigenvalue equation above. \\ 
+
+For the state $\ket{\frac 32, \frac 32}$:
+
+$$\hat S_x \ket{\frac 32, \frac 32} = \frac 32 \hbar \ket{\frac 32, \frac 32}$$ \ 
+
+$$
+\frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0
+\end{bmatrix}
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 \\
+        \sqrt 3 \\
+        \sqrt 3 \\
+        1
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	\frac{3\hbar}{4\sqrt 2} \\ 
+	\frac{\sqrt 3 \hbar}{4\sqrt 2} + \frac{2 \sqrt 3 \hbar}{4 \sqrt 2} \\ 
+	\frac{2 \sqrt 3 \hbar}{4 \sqrt 2} + \frac{\sqrt 3 \hbar}{4\sqrt 2} \\ 
+	\frac{3\hbar}{4\sqrt 2}
+\end{bmatrix}
+$$
+
+$$
+= \bigg( \frac 32 \hbar \bigg) \frac{1}{2 \sqrt 2} 
+\begin{bmatrix}
+	1 \\
+        \sqrt 3 \\
+        \sqrt 3 \\
+        1
+\end{bmatrix}
+\hspace{1cm} \therefore \;\; \text{qed}
+$$ \ 
+
+For the state $\ket{\frac 32, \frac 12}$:
+
+$$\hat S_x = \ket{\frac 32, \frac 12} = \frac 12 \hbar \ket{\frac 32, \frac 12}$$ \ 
+
+$$
+\frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0 
+\end{bmatrix} 
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        \sqrt 3 \\
+        1 \\
+        -1 \\
+        -\sqrt 3
+\end{bmatrix}
+$$
+
+$$
+= \bigg( \frac 12 \hbar \bigg) \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        \sqrt 3 \\
+        1 \\
+        -1 \\
+        -\sqrt 3
+\end{bmatrix}
+\hspace{1cm} \therefore \;\; \text{qed}
+$$ \ 
+
+For the state $\ket{\frac 32, -\frac 12}$:
+
+$$\hat S_x \ket{\frac 32, -\frac 12} = -\frac 12 \hbar \ket{\frac 32, -\frac 12}$$ \ 
+
+$$
+\frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0
+\end{bmatrix} 
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        \sqrt 3 \\
+        -1 \\
+        -1 \\
+        \sqrt 3
+\end{bmatrix}
+$$
+
+$$
+= \bigg( -\frac 12 \hbar \bigg) \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        \sqrt 3 \\
+        -1 \\
+        -1 \\
+        \sqrt 3
+\end{bmatrix}
+\hspace{1cm} \therefore \;\; \text{qed}
+$$ \ 
+
+For the state $\ket{\frac 32, -\frac 32}$:
+
+$$S_x \ket{\frac 32, -\frac 32} = -\frac 32 \hbar \ket{\frac 32, -\frac 32}$$ \ 
+
+$$
+\frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0
+\end{bmatrix}
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 \\
+        -\sqrt 3 \\
+        \sqrt 3 \\
+        -1
+\end{bmatrix}
+$$ 
+
+$$
+= \bigg( -\frac 32 \hbar \bigg) \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 \\
+        -\sqrt 3 \\
+        \sqrt 3 \\
+        -1
+\end{bmatrix}
+\hspace{1cm} \therefore \;\; \text{qed}
+$$ \ 
+
+i.e. the four proposed eigenvectors in the question are valid matrix representations of the eigenstates of $\hat S_x$, since they yield the appropriate eigenvalues for a spin $\frac 32$ particle. \\ 
+
+To verify the states are orthonormal, simply compute their inner product(s). \\ 
+
+For the states $\ket{\frac 32, \frac 32}$ and $\ket{\frac 32, \frac 12}$, the inner product:
+
+$$\bra{\frac 32, \frac 32}\ket{\frac 32, \frac 12}_x$$
+
+$$
+= \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+	1 & \sqrt 3 & \sqrt 3 & 1
+\end{bmatrix}
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        \sqrt 3 \\
+        1 \\
+        -1 \\
+        -\sqrt 3
+\end{bmatrix}
+= 0
+$$ \ 
+
+For the states $\ket{\frac 32, \frac 32}$ and $\ket{\frac 32, -\frac 12}$, the inner product:
+
+$$\bra{\frac 32, \frac 32}\ket{\frac 32, -\frac 12}_x$$
+
+$$
+= \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 & \sqrt 3 & \sqrt 3 & 1
+\end{bmatrix}
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+	\sqrt 3 \\ 
+	-1 \\ 
+	-1 \\ 
+	\sqrt 3
+\end{bmatrix}
+= 0
+$$ \ 
+
+For the states $\ket{\frac 32, \frac 32}$ and $\ket{\frac 32, -\frac 32}$, the inner product:
+
+$$\bra{\frac 32, \frac 32}\ket{\frac 32, -\frac 32}_x$$
+
+$$
+= \frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 & \sqrt 3 & \sqrt 3 & 1
+\end{bmatrix}
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+        1 \\ 
+        -\sqrt 3 \\
+        \sqrt 3 \\ 
+        -1
+\end{bmatrix}
+= 0
+$$ \ 
+
+i.e. the states are clearly orthonormal (I didn't {\it explicitly} show the computations for the remaining three combinations of eigenvectors---since the LaTeX is tedious---but by a similar method their inner products are also demonstrably zero). This is the expected result, since the amplitude to find a state which has $S_x = m\hbar$ with $S_x = m' \hbar$ is zero for $m \neq m'$, i.e. demonstrating the general result:
+
+$$\bra{s,m'}\ket{s,m} = \delta_{m'm}$$ \ 
+
+
+
+
+
+\hrulefill 
+
+\hfill 
+
+{\bf \LARGE III.iii -- Spin $\frac 32$ (c)} \\ 
+
+{\it Townsend 3.24} \\ 
+A spin-$\frac 32$ particle is in the state
+
+$$
+\ket{\psi} \xrightarrow[S_z]{} N
+\begin{bmatrix}
+	i \\ 
+	2 \\ 
+	3 \\ 
+	4i
+\end{bmatrix}
+$$ \ 
+
+(a) Determine a value for $N$ so that $\ket{\psi}$ is appropriately normalised. \\
+
+(b) What is $\langle S_x \rangle$ for this state? {\it Suggestion:} the matrix representation of $\hat S_x$ is given in example 3.4. \\
+
+(c) What is the probability that a measurement of $S_x$ will yield the value $\frac \hbar 2$ for this state? {\it Suggestion:} See problem 3.23. \\ 
+
+{\bfit{Solution}} \\ 
+
+{\bf (a)} The state $\ket{\psi}$ is normalised if $\bra{\psi}\ket{\psi} = 1$. In the matrix representation, this condition can be expressed:
+
+$$
+N^*
+\begin{bmatrix}
+	-i & 2 & 3 & -4i
+\end{bmatrix}
+N
+\begin{bmatrix}
+	i \\ 
+	2 \\ 
+	3 \\ 
+	4i
+\end{bmatrix}
+= 1
+$$
+
+i.e. 
+
+$$N^* N \bigg( -(i^2) + 4 + 9 -4(i^2) \bigg) = 1$$
+
+$$|N|^2 \cdot 30 = 1$$
+
+$$\therefore \;\; N = \frac{1}{\sqrt{30}}$$ \ 
+
+{\bf (b)} The expectation value of $S_x$ is given by:
+
+$$\langle S_x \rangle = \bra{\psi} \hat S_x \ket{\psi}$$ \ 
+
+where $\hat S_x$ is the rotation generator. For a spin $\frac 32$ particle, $\hat S_x$ is:
+
+$$
+\hat S_x \longrightarrow \frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0
+\end{bmatrix}
+$$ \ 
+
+(given in III.b and Townsend example 3.4). \\ 
+
+Computing $\langle S_x \rangle$ in the matrix representation gives:
+
+$$
+\langle S_x \rangle = 
+\frac{1}{\sqrt{30}} 
+\begin{bmatrix}
+        -i & 2 & 3 & -4i
+\end{bmatrix}
+\frac \hbar 2
+\begin{bmatrix}
+        0 & \sqrt 3 & 0 & 0 \\
+        \sqrt 3 & 0 & 2 & 0 \\
+        0 & 2 & 0 & \sqrt 3 \\
+        0 & 0 & \sqrt 3 & 0
+\end{bmatrix}
+\frac{1}{\sqrt{30}}
+\begin{bmatrix}
+        i \\
+        2 \\
+        3 \\
+        4i
+\end{bmatrix}
+$$
+
+$$
+= \frac{\hbar}{2 \sqrt 30}
+\begin{bmatrix}
+	2 \sqrt 3 & -\sqrt 3 i + 6 & 4 - 4\sqrt 3 i & 3\sqrt 3
+\end{bmatrix}
+\frac{1}{\sqrt 30} 
+\begin{bmatrix}
+        i \\
+        2 \\
+        3 \\
+        4i
+\end{bmatrix}
+$$
+
+$$= \frac{\hbar}{60} \bigg( 2 \sqrt 3 i - 2 \sqrt 3 i + 12 + 12 - 12\sqrt 3 i + 12 \sqrt 3 i \bigg) = \frac{\hbar}{60} \big( 24 \big)$$ 
+
+$$\therefore \;\; \langle S_x \rangle = \frac 25 \hbar$$ \ 
+
+{\bf (c)} If a particle is in the state $\ket{\psi}$ and a measurement is carried out, the probability amplitude to find the particle in state $\ket{\psi}$ is given by $\bra{\phi}\ket{\psi}$. The {\it probability} of finding the particle in the state $\ket{\phi}$ is:
+
+$$| \bra{\phi}\ket{\psi} |^2$$ \ 
+
+From problem 3.23, the state with value $\frac 12 \hbar$ has the following matrix representation in the $S_x$ basis:
+
+$$
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+	\sqrt 3 \\ 
+	1 \\ 
+	-1 \\ 
+	-\sqrt 3
+\end{bmatrix}
+$$ \ 
+
+In this case, for the particle in state $\ket{\psi}$, if a measurement of $S_x$ is carried out, the probability amplitude it will yield the value $\frac 12 \hbar$ is given (in matrix representation) by:
+
+$$
+\frac{1}{2\sqrt 2}
+\begin{bmatrix}
+	\sqrt 3 & 1 & -1 & -\sqrt 3
+\end{bmatrix}
+\frac{1}{\sqrt{30}}
+\begin{bmatrix}
+        i \\
+        2 \\
+        3 \\
+        4i
+\end{bmatrix}
+$$
+
+$$= \frac{1}{2 \sqrt 2 \sqrt{30}} \bigg( \sqrt 3 i + 2 - 3 - 4\sqrt 3 i \bigg)$$ \ 
+
+And the {\it probability} is simply the square of the above:
+
+$$\text{P} = \Bigg| \frac{1}{2 \sqrt 2 \sqrt{30}} \bigg( \sqrt 3 i + 2 - 3 - 4\sqrt 3 i \bigg) \Bigg|^2 = \frac{7}{60}$$ \ 
+
+i.e. the probability a measurement of $S_x$ will yield the value $\frac 12 \hbar$ is $\frac{7}{60}$. \\ 
+
+
+
+
+
+\hrulefill 
+
+\hfill 
+
+{\bf \LARGE IV -- Spin 2} \\ 
+
+Construct matrices that represent the operators $\hat J_x$ and $\hat J_y$ for particles with spin $j = 2$, in the $z$-basis. \\ 
+
+{\bfit{Solution}} \\ 
+For $s = 2$, there are $2s+1 = 5$ basis states, which are $\ket{2,2}$, $\ket{2,1}$, $\ket{2,0}$, $\ket{2,-1}$, and $\ket{2,-2}$. \\ 
+
+In the $S_z$ basis, these states can be represented in matrix form as:
+
+$$
+\ket{2,2} = 
+\begin{bmatrix}
+	1 \\ 0 \\ 0 \\ 0 \\ 0
+\end{bmatrix}
+\hspace{0.5cm}
+\ket{2,1} = 
+\begin{bmatrix}
+        0 \\ 1 \\ 0 \\ 0 \\ 0
+\end{bmatrix}
+\hspace{0.5cm}
+...
+\hspace{0.5cm}
+\ket{2,-2} = 
+\begin{bmatrix}
+        0 \\ 0 \\ 0 \\ 0 \\ 1
+\end{bmatrix}
+$$ \ 
+
+Using the fact that:
+
+$$\hat S_+ \ket{s,m} = \sqrt{s(s+1) - m(m+1)} \hbar \ket{s,m+1}$$ \ 
+
+it follows that:
+
+$$
+\begin{aligned}
+	\hat S_+ \ket{2,1} &= 2 \hbar \ket{2,2} \\ 
+	\hat S_+ \ket{2,0} &= \sqrt 6 \hbar \ket{2,1} \\ 
+	\hat S_+ \ket{2,-1} &= \sqrt 6 \hbar \ket{2,0} \\ 
+	\hat S_+ \ket{2,-2} &= 2 \hbar \ket{2,-1}
+\end{aligned}
+$$ \ 
+
+Using these relations, and the matrix representations of the basis states, it is clear that the matrix elements of the raising operator must have the form:
+
+$$
+\hat S_+ = \hbar 
+\begin{bmatrix}
+	0 & 2 & 0 & 0 & 0 \\ 
+	0 & 0 & \sqrt 6 & 0 & 0 \\ 
+	0 & 0 & 0 & \sqrt 6 & 0 \\ 
+	0 & 0 & 0 & 0 & 2 \\ 
+	0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+$$ \ 
+
+(in order to satisfy the relation)
+
+$$\hat S_+ \ket{s,m} = \sqrt{s(s+1) - m(m+1)} \hbar \ket{s,m+1}$$ \
+
+The lowering operator $S_-$ is simply the conjugate transpose of $S_+$, i.e.
+
+$$
+\hat S_- = \hbar
+\begin{bmatrix}
+        0 & 0 & 0 & 0 & 0 \\
+        2 & 0 & 0 & 0 & 0 \\
+        0 & \sqrt 6 & 0 & 0 & 0 \\
+        0 & 0 & \sqrt 6 & 0 & 0 \\
+        0 & 0 & 0 & 2 & 0
+\end{bmatrix}
+$$ \
+
+Note that since:
+
+$$\hat S_+ = \hat S_x + i\hat S_y$$
+
+$$\hat S_- = \hat S_x - i\hat S_y$$ \ 
+
+it follows that:
+
+$$\hat S_x = \frac{\hat S_+ + \hat S_-}{2}$$
+
+$$\hat S_y = \frac{\hat S_+ - \hat S_-}{2i}$$ \ 
+
+Computing $S_x$ and $S_y$ explicitly usint the simple relations above give:
+
+$$
+\hat S_x \rightarrow \frac \hbar 2
+\begin{bmatrix}
+	0 & 2 & 0 & 0 & 0 \\ 
+        2 & 0 & \sqrt 6 & 0 & 0 \\ 
+        0 & \sqrt 6 & 0 & \sqrt 6 & 0 \\ 
+        0 & 0 & \sqrt 6 & 0 & 2 \\ 
+        0 & 0 & 0 & 2 & 0
+\end{bmatrix}
+$$ \ 
+
+$$
+\hat S_y \rightarrow \frac{\hbar}{2i}
+\begin{bmatrix}
+        0 & 2 & 0 & 0 & 0 \\
+        -2 & 0 & \sqrt 6 & 0 & 0 \\
+        0 & -\sqrt 6 & 0 & \sqrt 6 & 0 \\
+        0 & 0 & -\sqrt 6 & 0 & 2 \\
+        0 & 0 & 0 & -2 & 0
+\end{bmatrix}
+$$ \
+
+\end{multicols*}
+
+\end{document}

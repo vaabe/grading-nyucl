@@ -35,7 +35,7 @@ pithy_usage_message() {
 }
 
 welcome_message() {
-	printf "Welcome. 拿一个啤酒.\n"
+	printf "Good evening! 拿一个啤酒.\n"
 	printf "\nGrading directory: %s\n" "${hwdir}"
 }
 
@@ -103,8 +103,9 @@ run_save() {
 
 check_if_configured() {
 	if ! [ -f "$progressfile" ]; then
+		echo ""
 		echo -e "Grading directory not configured yet."
-		echo -e "Please configure directory by running grade <dir> -c\n"
+		echo -e "Try running: grade <dir> -c\n"
 		exit 1
 	fi
 }
@@ -265,6 +266,7 @@ if [ "$#" == 2 ] ; then
 			run_grade
 			;;
 		-v|--view)
+			check_if_configured
 			run_viewer
 			;;
 		-s|--save)
