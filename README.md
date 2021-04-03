@@ -8,8 +8,6 @@ A terminal grading workflow for NYU Classes. I made this to help speed up gradin
 
 ## Usage
 
-`./init` to add scripts to `$PATH`. 
-
 ```
 Usage: grade <dir> <option>
 
