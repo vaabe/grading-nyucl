@@ -2,7 +2,7 @@
 
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
 
-![](./media/student-selector.png)
+![Student Selector](./media/student-selector.png)
 
 <br>
 
