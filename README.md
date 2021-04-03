@@ -1,7 +1,7 @@
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
 
 <figure>
-<img src="./media/student-selector-narrow.png" width="60%" />
+<img src="./media/student-selector-narrow.png" width="50%" />
 </figure>
 
 <br>
