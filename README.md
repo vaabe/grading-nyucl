@@ -20,3 +20,12 @@ options:
 	-t|--stats		show statistics
 	-u|--upload		create upload directory
 ```
+
+- Download the assignment zip file from NYU Classes. Make sure to tick the boxes for "Student submission attachments", "Feedback attachments", and "grades.csv file". 
+- Unzip the directory, move to the desired location, etc. 
+- Now "configure" the grading directory by running `grade <dir> -c`. This will create a comments.txt file in each student directory, and it will also add a progress.csv file to the directory to log current grading progress and prevent accidental overwrites. 
+- Open the student selector by running `grade <dir> -g`. This will print a list of students, based on the list in the grades.csv file, highlighting in yellow the students whose submissions are not yet graded. 
+- Enter the number of the student you want to grade. This will open their comments.txt file (in Vim). 
+- In a separate window open the student's submission attachment(s). Running `grade <dir> -v` will do this automatically, opening pdf files with zathura and docx files with libre. 
+- Once done, close the comments.txt file. This will save all the written comments for each student into the comments buffer (commentsbuffer.txt) for easy access when grading other assignments. The grades will also be parsed and saved in the grades file (saved to grades-tmp.csv to keep a copy of the original grades file format). 
+- When grading is done run `grade <dir> -u` to create a separate "upload" directory, which contains only the necessary files for uploading back to NYU Classes. 
