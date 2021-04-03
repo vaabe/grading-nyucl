@@ -2,7 +2,10 @@
 
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
 
-![](./media/student-selector.png "caption")
+<figure>
+	<img src="./media/student-selector.png" />
+	<figcaption> Abb.1: </figcaption>
+</figure>
 
 <br>
 
