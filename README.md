@@ -1,15 +1,6 @@
-# grading
-
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
 
-<figure>
-	<img src="./media/student-selector.png" />
-	<figcaption> Abb.1: </figcaption>
-</figure>
-
-<br>
-
-![](./media/full-view.png)
+![](./media/student-selector-narrow.png)
 
 <br>
 
