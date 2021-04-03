@@ -1,8 +1,16 @@
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. reports, essays, etc), and to avoid having to deal with the (convoluted) export format used by Classes.  
 
-<figure>
-<img src="./media/student-selector-narrow.png" width="55%" />
-</figure>
+<p float="left">
+<br>
+<img src="./media/student-selector.png" width="55%" />
+<img src="./media/comments-txt.png" width="55%" />
+</p>
+
+<p float="left">
+<img src="./media/comments-pdf.png" width="55%" />
+<img src="./media/stats.png" width="55%" />
+<br>
+</p>
 
 <br>
 
