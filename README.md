@@ -2,7 +2,7 @@
 
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. lab reports, project essays, etc). 
 
-<p float="left">
+<p float="center">
 <br>
 	<img src="./media/grading-comments-select.png" width="45%" />
 	<img src="./media/statistics.png" width="45%" />
