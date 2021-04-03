@@ -11,6 +11,10 @@ A terminal grading workflow for NYU Classes. I made this to help speed up gradin
 
 ![](./media/full-view.png)
 
+<br>
+
+## usage
+
 `./init` to add scripts to `$PATH`. 
 
 ```
