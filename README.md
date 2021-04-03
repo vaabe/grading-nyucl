@@ -1,8 +1,6 @@
 A terminal grading workflow for NYU Classes. I made this to help speed up grading long-form assignments (e.g. reports, essays, etc). 
 
-<figure>
 <img src="./media/student-selector-narrow.png" style="display:block; margin-left: auto; margin-right: auto;" />
-</figure>
 
 <br>
 
