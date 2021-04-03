@@ -37,7 +37,7 @@ options:
 - `-v` to open the student submissions selector. A list of students will be printed, with ungraded ones highlighted in yellow. Enter the student's number to open their submission attachment(s). Pdf files are opened with zathura, and docx files are opened with LibreOffice. 
 - `-s` to save current grading progress. This runs a script that parses the `comments.txt` files for each student, saves their comments in the comments buffer, saves their grades in the grades file, and writes the information to a markdown file `comments.md`. 
 	+ N.B. the grades are actually saved in a "tmp" file, `grades-tmp.csv`, not the original `grades.csv` file. This is so a copy of the original grades file format is preserved (in case anything weird happens). I've noticed that NYU Classes is rather fussy about the format of the grades file that gets uploaded (in particular the variable names and the metadata at the top of the grades file). If anything differs from the original download format, the grades don't get uploaded correctly. 
-- `-p` to generate a pdf comments file for each student. Uses Pandoc to parse the comments.md files for each student, and generates a comments.pdf file ([Figure 3](https://github.com/vaabe/grading/blob/main/media/comments-pdf.png)). 
+- `-p` to generate a pdf comments file for each student. Uses Pandoc to parse the `comments.md` files for each student, and generates a `comments.pdf` file ([Figure 3](https://github.com/vaabe/grading/blob/main/media/comments-pdf.png)). 
 
 # How to use
 
