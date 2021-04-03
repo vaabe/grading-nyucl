@@ -7,5 +7,5 @@
 ----        ----
 theory         -
 analysis       -
-total           -
+total         9.5
 ----        ----

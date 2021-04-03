@@ -6,7 +6,7 @@ insert comments
 
 theory, -
 analysis, -
-total, -
+total, 9.5
 
 ## EXTRAS
 

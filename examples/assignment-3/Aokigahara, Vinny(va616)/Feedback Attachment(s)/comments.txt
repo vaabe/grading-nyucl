@@ -4,9 +4,7 @@ insert comments
 
 ## GRADE
 
-theory, -
-analysis, -
-total, -
+total, 10
 
 ## EXTRAS
 

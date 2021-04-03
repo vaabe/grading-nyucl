@@ -1,11 +1,9 @@
 ## COMMENTS
 
-- insert comments
+- good job!
 
 ## GRADE
 
 ----        ----
-theory         -
-analysis       -
-total           -
+total          10
 ----        ----

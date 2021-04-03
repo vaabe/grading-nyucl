@@ -5,7 +5,7 @@
 ## GRADE
 
 ----        ----
-theory         -
-analysis       -
-total           -
+theory        -1
+analysis      -1
+total           8
 ----        ----

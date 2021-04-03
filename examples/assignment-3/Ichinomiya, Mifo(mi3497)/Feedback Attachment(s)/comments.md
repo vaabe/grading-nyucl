@@ -5,7 +5,6 @@
 ## GRADE
 
 ----        ----
-theory         -
-analysis       -
-total           -
+theory      -1.5
+total         8.5
 ----        ----
