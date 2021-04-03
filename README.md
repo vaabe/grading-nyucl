@@ -32,7 +32,7 @@ options:
 - `-c` to configure/initialize the directory for grading. 
 	+ creates a `comments.txt` file in each student directory.
 	+ creates a `progress.csv` file in the main directory, to log current grading progress and prevent accidental overwrites. 
-- `-g` to enter the grading comments selector. A list of students will be printed, with ungraded ones highlighted in yellow (fig: top left).  
+- `-g` to enter the grading comments selector. A list of students will be printed, with ungraded ones highlighted in yellow ([fig 1](https://github.com/vaabe/grading/blob/main/media/student-selector.png)).  
 
 # How to use
 
