@@ -14,7 +14,7 @@ A "terminal" grading workflow for NYU Classes. Provides an interface to select s
 
 <br>
 
-# CLI flags
+# CLI Flags
 
 ```
 Usage: grade <dir> <option>
@@ -29,19 +29,19 @@ options:
 	-u|--upload		create upload directory
 ```
 
-- `-c` to configure/initialize the directory for grading. 
+- `-c` to configure (i.e. initialize) the directory for grading. 
 	+ creates a `comments.txt` file in each student directory.
-	+ creates a `progress.csv` file in the main directory, to log current grading progress and prevent accidental overwrites. 
-	+ creates a `commentsbuffer.txt` file in the main directory, which logs all comments (for the students graded so far), for easy access when grading other assignments. 
+	+ creates a `progress.csv` file in the grading directory, to log current progress and prevent accidental overwrites. 
+	+ creates a `commentsbuffer.txt` file in the grading directory, which logs all comments for the students graded so far (for easy access).  
 - `-g` to open the grading comments selector. A list of students will be printed, with ungraded ones highlighted in yellow ([Figure 1](https://github.com/vaabe/grading/blob/main/media/student-selector.png)). Enter the student's number to open their `comments.txt` file for grading. Both the comments file and the commentsbuffer file are opened in Vim ([Figure 2](https://github.com/vaabe/grading/blob/main/media/comments-txt.png)). 
 - `-v` to open the student submissions selector. A list of students will be printed, with ungraded ones highlighted in yellow. Enter the student's number to open their submission attachment(s). Pdf files are opened with zathura, and docx files are opened with LibreOffice. 
-- `-s` to save current grading progress. This runs a script that parses the `comments.txt` files for each student, saves their comments in the comments buffer, saves their grades in the grades file, and writes the information to a markdown file `comments.md`. 
-	+ N.B. the grades are actually saved in a "tmp" file, `grades-tmp.csv`, not the original `grades.csv` file. This is so a copy of the original grades file format is preserved (in case anything weird happens). I've noticed that NYU Classes is rather fussy about the format of the grades file that gets uploaded (in particular the variable names and the metadata at the top of the grades file). If anything differs from the original download format, the grades don't get uploaded correctly. 
+- `-s` to save current grading progress. This runs a script that parses the `comments.txt` files for each student, saves their comments in the comments buffer, saves their grades in a grades file, and writes the information to a markdown file `comments.md`. 
+	+ N.B. the grades are saved in a file `grades-tmp.csv`, not the original `grades.csv` file. This is so that a copy of the original grades file format is preserved (in case anything weird happens). I've noticed that NYU Classes is rather fussy about the format of the grades file that gets uploaded (in particular the variable names and the metadata at the top of the grades file. If anything differs from the original download format, the grades don't get uploaded correctly).  
 - `-p` to generate a pdf comments file for each student. Uses [Pandoc](https://pandoc.org/) to parse the `comments.md` files for each student, and generates a `comments.pdf` file ([Figure 3](https://github.com/vaabe/grading/blob/main/media/comments-pdf.png)). 
 - `-t` to show summary statistics. Runs a script written in Julia that parses the `grades-tmp.csv` file, and prints a grade histogram (using [UnicodePlots.jl](https://github.com/Evizero/UnicodePlots.jl)) and some summary statistics ([Figure 4](https://github.com/vaabe/grading/blob/main/media/stats.png)). 
 - `-u` to create an "upload" directory that contains only the necessary files for uploading back to NYU Classes. 
 
-# How to use
+# Usage
 
 - Download the assignment zip file from NYU Classes. Tick the boxes for "Student submission attachments", "Feedback attachments", and "grades.csv file". Probably also tick the box for "include students who haven't submitted yet". 
 - Unzip the directory, move to the desired location, etc. 
