@@ -43,14 +43,15 @@ gceil = ceil(gmax)
 
 numbins = gceil - gfloor
 
-plot = histogram(completegrades,
-				 nbins = numbins,
-				 closed = :right,
-				 border = :dotted,
-				 color = :yellow
+hist = histogram(completegrades, 
+				 nbins = numbins, 
+				 closed = :right, 
+				 border = :dotted, 
+				 color = :yellow,
+				 width = 40
 				 )
 
-println(plot)
+println(hist)
 println("")
 println("   n_students:    ", numstudents)
 println("   n_graded:      ", numgraded)
